@@ -17,7 +17,6 @@ if ($koneksi == false) {
 }
 
 $halamannya = new Page($page);
-
 ?>
 <!DOCTYPE html>
   <head>
@@ -29,9 +28,13 @@ $halamannya = new Page($page);
     <!-- masukkan stylesheet disini -->
     <link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
+    <link type="text/css" rel="stylesheet" href="assets/ionicons/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
   </head>
   <body>
+<?php
+$halamannya->setSidebar();
+?>
 <?php
 $halamannya->setPage();
 ?>

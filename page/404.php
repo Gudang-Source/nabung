@@ -1,9 +1,12 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h2 class="text-center">404 Not Found</h2>
+          <span class="size-96">
+            <center><i class="icon ion-alert-circled fc-warning-light"></i></center>
+          </span>
+          <h2 class="error-title text-center">404 Not Found</h2>
           <div class="alert alert-warning error-box">
-            <h4>Ente salah kamar</h4>
+            <h4><span class="icon ion-fw ion-alert-circled"></span>Ente salah kamar</h4>
             <p class="error-message error-message-warning">Halaman yang ente cari tidak ditemukan!</p>
             <a class="btn btn-warning error-button" name="button" href="?p=dashboard">Kembali</a>
           </div>

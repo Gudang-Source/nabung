@@ -1,8 +1,9 @@
 <?php
   class Page{
     private $page;
+    private $activePage = array('dashboard' => '', 'income' => '', 'outcome' => '', 'wishlist' => '');
 
-    //Untuk memberikan nilai awal, agar lebih mudah Initiasinya
+    //Untuk memberikan nilai awal, agar lebih mudah saat Initiasinya
     public function __construct($getPage){
         $this->page = $getPage;
     }
@@ -17,7 +18,7 @@
       }elseif ($this->page == "wishlist") {
         $title = "Wishlist";
       }elseif ($this->page == "error") {
-        $title = "Terjadi Kesalahan!";
+        $title = "Terjadi Kesalahan! ";
       }elseif ($this->page == "login") {
         $title = "Login ke Nabung";
       }else{
@@ -42,6 +43,25 @@
       }else{
         include_once 'page/404.php';
       }
+    }
+
+    public function setSidebar(){
+      if ($this->page == "dashboard" || $this->page == "income" || $this->page == "outcome" || $this->page == "wishlist") {
+        include_once 'page/sidebar.php';
+      }
+    }
+
+    public function setActive(){
+      if ($this->page == "dashboard") {
+        $this->activePage['dashboard'] = " class='active'";
+      }elseif ($this->page == "income") {
+        $this->activePage['income'] = " class='active'";
+      }elseif ($this->page == "outcome") {
+        $this->activePage['outcome'] = " class='active'";
+      }elseif ($this->page == "wishlist") {
+        $this->activePage['wishlist'] = " class='active'";
+      }
+      return $this->activePage;
     }
   }
 ?>

@@ -28,3 +28,54 @@ body{
 .error-box{
   margin-top:35px;
 }
+.error-title{
+  margin-top: 0px;
+}
+
+/* for ionicons */
+.size-12{
+  font-size: 12px;
+}
+.size-24{
+  font-size: 24px;
+}
+.size-96{
+  font-size: 96px;
+}
+.ion-fw{
+  padding-right: 6px;
+  padding-left: 6px;
+  text-align: center;
+}
+
+/* font color */
+.fc-danger{
+  color: #DA4453;
+}
+.fc-danger-light{
+  color: #ED5565;
+}
+.fc-primary{
+  color: #3BAFDA;
+}
+.fc-primary-light{
+  color: #4FC1E9;
+}
+.fc-warning{
+  color: #F6BB42;
+}
+.fc-warning-light{
+  color: #FFCE54;
+}
+.fc-success{
+  color: #8CC152;
+}
+.fc-success-light{
+  color: #A0D468;
+}
+.fc-info{
+  color: #37BC9B;
+}
+.fc-info-light{
+  color: #48CFAD;
+}
