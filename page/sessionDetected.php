@@ -8,7 +8,8 @@
           <div class="alert alert-success error-box">
             <h4><span class="icon ion-fw ion-alert-circled"></span>Ente sudah login</h4>
             <p class="error-message error-message-success">Ngapain ente login / register lagi?</p>
-            <a class="btn btn-success error-button" name="button" href="?p=dashboard">Dashboard</a>
+            <a class="btn btn-success error-button" href="?p=dashboard">Dashboard</a>
+            <a class="btn btn-link error-button" href="?logout">atau Logout</a>
           </div>
         </div>
       </div>

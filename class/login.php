@@ -7,7 +7,9 @@ class Login{
   public function __construct($koneksi){
     $this->conn = $koneksi;
 
-    session_start();
+    if (empty($_SESSION['status'])) {
+      session_start();
+    }
 
     if (isset($_GET['logout'])) {
       $this->Logout();
@@ -33,8 +35,9 @@ class Login{
 
     if ($jumlah['jumlah'] == 1) {
       if ($password == $userData['password']) {
-        $_SESSION['username'] = $userData['username'];
+        $_SESSION['status'] = 1;
         $_SESSION['id'] = $userData['user_id'];
+        $_SESSION['username'] = $userData['username'];
 
         header('location:?p=dashboard');
       }else{
@@ -47,7 +50,7 @@ class Login{
   }
 
   public function sessionCheck(){
-    if (isset($_SESSION['username'])) {
+    if (isset($_SESSION['status'])) {
       return TRUE;
     }else{
       return FALSE;
@@ -57,6 +60,7 @@ class Login{
   private function Logout(){
     session_unset();
     session_destroy();
+    header('location?p=login');
   }
 }
 ?>

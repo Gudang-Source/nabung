@@ -4,19 +4,44 @@
     private $activePage = array('dashboard' => '', 'income' => '', 'outcome' => '', 'wishlist' => '');
 
     //Untuk memberikan nilai awal, agar lebih mudah saat Initiasinya
-    public function __construct($getPage,$sessionStatus,$connectError){
-        $this->page = $getPage;
+    public function __construct($getPage, $sessionStatus, $connectionStatus){
+      if ($connectionStatus == FALSE) {
+        $this->page = "error";
+      }elseif (empty($getPage)) {
+        if ($sessionStatus == TRUE) {
+          header('location:?p=dashboard');
+        }else{
+          header('location:?p=login');
+        }
+      }elseif($getPage == "dashboard" || $getPage == "income" || $getPage == "outcome" || $getPage == "wishlist" || $getPage == "login" || $getPage == "register"){
+        if ($sessionStatus == FALSE) {
+          if ($getPage == "login" || $getPage == "register") {
+            $this->page = $getPage;
+          }else{
+            $this->page = "nosession";
+          }
+        }elseif ($sessionStatus == TRUE) {
+          if ($getPage == "login" || $getPage == "register") {
+            $this->page = "sessiondetect";
+          }else{
+            $this->page = $getPage;
+          }
+        }
+      }else{
+        $this->page = "404";
+      }
+      return $this->page;
     }
 
     public function setTitle(){
       if ($this->page == "dashboard") {
-        $title = "Dashboard";
+        $title = "Dashboard - Nabung";
       }elseif ($this->page == "income") {
-        $title = "Income";
+        $title = "Income - Nabung";
       }elseif ($this->page == "outcome") {
-        $title = "Outcome";
+        $title = "Outcome - Nabung";
       }elseif ($this->page == "wishlist") {
-        $title = "Wishlist";
+        $title = "Wishlist - Nabung";
       }elseif ($this->page == "error") {
         $title = "Terjadi Kesalahan! ";
       }elseif ($this->page == "login") {

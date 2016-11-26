@@ -1,6 +1,10 @@
 <?php
-$page = $_GET['p'];
-$halamannya = new Page($page);
+$database = new Koneksi();
+$koneksi = $database->dapetKoneksi();
+
+$login = new Login($koneksi);
+
+$halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
 $activePage = $halamannya->setActive();
 ?>
     <aside class="">

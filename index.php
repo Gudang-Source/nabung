@@ -10,40 +10,14 @@ $koneksi = $database->dapetKoneksi();
 
 $login = new Login($koneksi);
 
-// Cek Halaman
-if ($koneksi == FALSE) {
-  $page = "error";
-}elseif (empty($_GET['p'])) {
-  if ($login->sessionCheck() == TRUE) {
-    header('location:?p=dashboard');
-  }else{
-    header('location:?p=login');
-  }
-}elseif($_GET['p'] == "dashboard" || $_GET['p'] == "income" || $_GET['p'] == "outcome" || $_GET['p'] == "wishlist" || $_GET['p'] == "login" || $_GET['p'] == "register"){
-  if ($login->sessionCheck() == FALSE) {
-    if ($_GET['p'] == "login" || $_GET['p'] == "register") {
-      $page = $_GET['p'];
-    }else{
-      $page = "nosession";
-    }
-  }elseif ($login->sessionCheck() == TRUE) {
-    if ($_GET['p'] == "login" || $_GET['p'] == "register") {
-      $page = "sessiondetect";
-    }else{
-      $page = $_GET['p'];
-    }
-  }
-}else{
-  $page = "404";
-}
-
-$halamannya = new Page($page);
+$halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
 ?>
 <!DOCTYPE html>
   <head>
     <!-- masukkan meta disini -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title><?php echo $halamannya->setTitle();?></title>
 
     <!-- masukkan stylesheet disini -->
