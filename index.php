@@ -1,5 +1,6 @@
 <?php
 require_once 'class/koneksi.php';
+require_once 'class/login.php';
 require_once 'class/transaksi.php';
 require_once 'class/page.php';
 
@@ -7,13 +8,33 @@ require_once 'class/page.php';
 $database = new Koneksi();
 $koneksi = $database->dapetKoneksi();
 
+$login = new Login($koneksi);
+
 // Cek Halaman
-if ($koneksi == false) {
+if ($koneksi == FALSE) {
   $page = "error";
 }elseif (empty($_GET['p'])) {
-  $page = "404";
+  if ($login->sessionCheck() == TRUE) {
+    header('location:?p=dashboard');
+  }else{
+    header('location:?p=login');
+  }
+}elseif($_GET['p'] == "dashboard" || $_GET['p'] == "income" || $_GET['p'] == "outcome" || $_GET['p'] == "wishlist" || $_GET['p'] == "login" || $_GET['p'] == "register"){
+  if ($login->sessionCheck() == FALSE) {
+    if ($_GET['p'] == "login" || $_GET['p'] == "register") {
+      $page = $_GET['p'];
+    }else{
+      $page = "nosession";
+    }
+  }elseif ($login->sessionCheck() == TRUE) {
+    if ($_GET['p'] == "login" || $_GET['p'] == "register") {
+      $page = "sessiondetect";
+    }else{
+      $page = $_GET['p'];
+    }
+  }
 }else{
-  $page = $_GET['p'];
+  $page = "404";
 }
 
 $halamannya = new Page($page);

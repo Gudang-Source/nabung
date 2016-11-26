@@ -10,6 +10,18 @@ body{
   text-align: center;
 }
 
+/* Login Form */
+.login-form{
+  margin: 100px auto;
+  padding: 20px 50px;
+  width: 450px;
+}
+@media (max-width: 768px){
+  .login-form{
+    width: 100%;
+  }
+}
+
 /* Error class */
 .error-message{
   margin-top: 15px;
@@ -21,6 +33,9 @@ body{
 }
 .error-message-danger{
   border-left: 3px solid #E9573F;
+}
+.error-message-success{
+  border-left: 3px solid #8CC152;
 }
 .error-button{
   margin-top: 20px;

@@ -2,40 +2,61 @@
 class Login{
   private $conn = null;
 
+  private $message;
+
   public function __construct($koneksi){
     $this->conn = $koneksi;
 
-    if ($_GET['logout']) {
+    session_start();
+
+    if (isset($_GET['logout'])) {
       $this->Logout();
-    }elseif ($_POST['login']) {
+    }
+    if (isset($_POST['login'])) {
       $this->Login();
     }
   }
 
-  public function Login(){
+  private function Login(){
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $result = $this->conn->query("SELECT * FROM user WHERE username = $this->username AND password = $this->password");
-    $data = $result->fetch(PDO::FETCH_ASSOC);
+    $query = $this->conn->prepare("SELECT * FROM user WHERE username = :username");
+    $auth = array(':username' => $username);
+    $query->execute($auth);
 
-    if ($result == 1) {
-      session_start();
-      $_SESSION['username'] = $data['username'];
-      $_SESSION['id'] = $data['user_id'];
-    }
-  }
+    $query2 = $this->conn->prepare("SELECT COUNT(*) AS jumlah FROM user WHERE username = :username");
+    $query2->execute($auth);
 
-  public function Session(){
-    if (isset($_SESSION['username'])) {
-      return "login";
+    $jumlah = $query2->fetch();
+    $userData = $query->fetch();
+
+    if ($jumlah['jumlah'] == 1) {
+      if ($password == $userData['password']) {
+        $_SESSION['username'] = $userData['username'];
+        $_SESSION['id'] = $userData['user_id'];
+
+        header('location:?p=dashboard');
+      }else{
+        $this->message = "Username / Password salah";
+      }
     }else{
-      return ""
+      $this->message = "User tidak ditemukan";
+    }
+    return $this->message;
+  }
+
+  public function sessionCheck(){
+    if (isset($_SESSION['username'])) {
+      return TRUE;
+    }else{
+      return FALSE;
     }
   }
 
-  public function Logout(){
-
+  private function Logout(){
+    session_unset();
+    session_destroy();
   }
 }
 ?>

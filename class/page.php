@@ -4,7 +4,7 @@
     private $activePage = array('dashboard' => '', 'income' => '', 'outcome' => '', 'wishlist' => '');
 
     //Untuk memberikan nilai awal, agar lebih mudah saat Initiasinya
-    public function __construct($getPage){
+    public function __construct($getPage,$sessionStatus,$connectError){
         $this->page = $getPage;
     }
 
@@ -21,6 +21,10 @@
         $title = "Terjadi Kesalahan! ";
       }elseif ($this->page == "login") {
         $title = "Login ke Nabung";
+      }elseif ($this->page == "nosession") {
+        $title = "No Session Detected";
+      }elseif ($this->page == "sessiondetect") {
+        $title = "Session Detected";
       }else{
         $title = "404 Not Found";
       }
@@ -40,6 +44,10 @@
         include_once 'page/error.php';
       }elseif ($this->page == "login") {
         include_once 'page/login.php';
+      }elseif ($this->page == "nosession") {
+        include_once 'page/errorLogin.php';
+      }elseif ($this->page == "sessiondetect") {
+        include_once 'page/sessionDetected.php';
       }else{
         include_once 'page/404.php';
       }
