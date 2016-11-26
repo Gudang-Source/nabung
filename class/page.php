@@ -17,9 +17,11 @@
       }elseif ($this->page == "wishlist") {
         $title = "Wishlist";
       }elseif ($this->page == "error") {
-        $title = "Terdapat Kesalahan!";
+        $title = "Terjadi Kesalahan!";
+      }elseif ($this->page == "login") {
+        $title = "Login ke Nabung";
       }else{
-        $title = "Halamannya gak ada";
+        $title = "404 Not Found";
       }
       return $title;
     }
@@ -35,6 +37,8 @@
         include_once 'page/wishlist.php';
       }elseif ($this->page == "error") {
         include_once 'page/error.php';
+      }elseif ($this->page == "login") {
+        include_once 'page/login.php';
       }else{
         include_once 'page/404.php';
       }

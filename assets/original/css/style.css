@@ -1,0 +1,30 @@
+/*
+ * Main Themes
+ * by Me x Bootflat x Bootstrap
+ * http://www.qbhcode.org/
+ */
+body{
+  background-color: #F5F7FA;
+}
+.text-center{
+  text-align: center;
+}
+
+/* Error class */
+.error-message{
+  margin-top: 15px;
+  padding-left: 15px;
+  font-size: 15px;
+}
+.error-message-warning{
+  border-left: 3px solid #F6BB42;
+}
+.error-message-danger{
+  border-left: 3px solid #E9573F;
+}
+.error-button{
+  margin-top: 20px;
+}
+.error-box{
+  margin-top:35px;
+}
