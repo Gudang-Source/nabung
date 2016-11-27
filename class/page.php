@@ -1,7 +1,7 @@
 <?php
   class Page{
     private $page;
-    private $activePage = array('dashboard' => '', 'income' => '', 'outcome' => '', 'wishlist' => '');
+    private $activePage = array('dashboard' => '', 'income' => '', 'outcome' => '', 'wishlist' => '', 'settings' => '');
 
     //Untuk memberikan nilai awal, agar lebih mudah saat Initiasinya
     public function __construct($getPage, $sessionStatus, $connectionStatus){
@@ -13,7 +13,7 @@
         }else{
           header('location:?p=login');
         }
-      }elseif($getPage == "dashboard" || $getPage == "income" || $getPage == "outcome" || $getPage == "wishlist" || $getPage == "login" || $getPage == "register"){
+      }elseif($getPage == "dashboard" || $getPage == "income" || $getPage == "outcome" || $getPage == "wishlist" || $getPage == "login" || $getPage == "register" || $getPage == "settings"){
         if ($sessionStatus == FALSE) {
           if ($getPage == "login" || $getPage == "register") {
             $this->page = $getPage;
@@ -42,6 +42,8 @@
         $title = "Outcome - Nabung";
       }elseif ($this->page == "wishlist") {
         $title = "Wishlist - Nabung";
+      }elseif ($this->page == "settings") {
+        $title = "Pengaturan - Nabung";
       }elseif ($this->page == "error") {
         $title = "Terjadi Kesalahan! ";
       }elseif ($this->page == "login") {
@@ -65,6 +67,8 @@
         include_once 'page/outcome.php';
       }elseif($this->page == "wishlist"){
         include_once 'page/wishlist.php';
+      }elseif($this->page == "settings"){
+        include_once 'page/settings.php';
       }elseif ($this->page == "error") {
         include_once 'page/error.php';
       }elseif ($this->page == "login") {
@@ -79,7 +83,7 @@
     }
 
     public function setSidebar(){
-      if ($this->page == "dashboard" || $this->page == "income" || $this->page == "outcome" || $this->page == "wishlist") {
+      if ($this->page == "dashboard" || $this->page == "income" || $this->page == "outcome" || $this->page == "wishlist" || $this->page == "settings") {
         include_once 'page/sidebar.php';
       }
     }
@@ -93,6 +97,8 @@
         $this->activePage['outcome'] = " class='active'";
       }elseif ($this->page == "wishlist") {
         $this->activePage['wishlist'] = " class='active'";
+      }elseif ($this->page == "settings") {
+        $this->activePage['settings'] = " class='active'";
       }
       return $this->activePage;
     }

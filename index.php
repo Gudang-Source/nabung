@@ -17,7 +17,7 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <!-- masukkan meta disini -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title><?php echo $halamannya->setTitle();?></title>
 
     <!-- masukkan stylesheet disini -->
@@ -25,6 +25,7 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
     <link type="text/css" rel="stylesheet" href="assets/ionicons/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
+    <link type="text/css" rel="stylesheet" href="assets/normalize/normalize.css">
   </head>
   <body>
 <?php
@@ -33,6 +34,25 @@ $halamannya->setSidebar();
 <?php
 $halamannya->setPage();
 ?>
+    <div id="confirmation" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close">&times;</button>
+            <h4 class="modal-title">Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              Apakah anda yakin ingin logout ?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-danger" href="?logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- masukkan javascript disini -->
     <script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/icheck.min.js"></script>

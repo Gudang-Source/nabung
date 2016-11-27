@@ -3,8 +3,9 @@
  * by Me x Bootflat x Bootstrap
  * http://www.qbhcode.org/
  */
-body{
+html,body{
   background-color: #F5F7FA;
+  height: 100%;
 }
 .text-center{
   text-align: center;
@@ -54,6 +55,12 @@ body{
 .size-24{
   font-size: 24px;
 }
+.size-36{
+  font-size: 36px;
+}
+.size-50{
+  font-size: 50px;
+}
 .size-96{
   font-size: 96px;
 }
@@ -61,6 +68,11 @@ body{
   padding-right: 6px;
   padding-left: 6px;
   text-align: center;
+}
+
+.huge{
+  font-size: 32px;
+  line-height: normal;
 }
 
 /* font color */
@@ -93,4 +105,34 @@ body{
 }
 .fc-info-light{
   color: #48CFAD;
+}
+
+/* skin color */
+
+
+/* sidebar */
+.main-sidebar{
+  position: absolute;;
+  width:250px;
+  padding-top: 100px;
+  margin-left: 10px;
+  min-height: 100%;
+}
+
+/* main content */
+.main-content{
+  margin-left: 260px;
+  padding-top: 10px;
+  min-height: 100%;
+}
+.content-header{
+  margin: 0 20px;
+}
+.content-box{
+  margin: 0 20px 20px;
+  border-radius: 5px;
+  min-height: 500px;
+  border: 1px solid #E6E9ED;
+  background-color: white;
+  padding: 30px;
 }

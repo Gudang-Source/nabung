@@ -27,13 +27,10 @@ class Login{
     $auth = array(':username' => $username);
     $query->execute($auth);
 
-    $query2 = $this->conn->prepare("SELECT COUNT(*) AS jumlah FROM user WHERE username = :username");
-    $query2->execute($auth);
-
-    $jumlah = $query2->fetch();
+    $jumlah = $query->rowCount();
     $userData = $query->fetch();
 
-    if ($jumlah['jumlah'] == 1) {
+    if ($jumlah == 1) {
       if ($password == $userData['password']) {
         $_SESSION['status'] = 1;
         $_SESSION['id'] = $userData['user_id'];
