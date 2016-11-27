@@ -9,7 +9,6 @@ $database = new Koneksi();
 $koneksi = $database->dapetKoneksi();
 
 $login = new Login($koneksi);
-
 $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
 ?>
 <!DOCTYPE html>
@@ -25,7 +24,7 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
     <link type="text/css" rel="stylesheet" href="assets/ionicons/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
-    <link type="text/css" rel="stylesheet" href="assets/normalize/normalize.css">
+    <link type="text/css" rel="stylesheet" href="assets/datatables/datatables.min.css">
   </head>
   <body>
 <?php
@@ -59,5 +58,12 @@ $halamannya->setPage();
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.selecter.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.stepper.min.js"></script>
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="assets/original/js/ajax-income.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#income').dataTable();
+      });
+    </script>
   </body>
 </html>
