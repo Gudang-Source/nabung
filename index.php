@@ -1,7 +1,6 @@
 <?php
 require_once 'class/koneksi.php';
 require_once 'class/login.php';
-require_once 'class/transaksi.php';
 require_once 'class/page.php';
 
 // Initiasi objek
