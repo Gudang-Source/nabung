@@ -22,8 +22,8 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
     <link type="text/css" rel="stylesheet" href="assets/ionicons/css/ionicons.min.css">
-    <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
     <link type="text/css" rel="stylesheet" href="assets/datatables/datatables.min.css">
+    <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
   </head>
   <body>
 <?php
@@ -62,6 +62,7 @@ $halamannya->setPage();
     <script type="text/javascript">
       $(document).ready(function(){
         $('#income').dataTable();
+        $('#outcome').dataTable();
       });
     </script>
   </body>
