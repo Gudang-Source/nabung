@@ -35,7 +35,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Data Pengeluaran</div>
+              <div class="panel-heading">
+                <h3 class="panel-title">Data Pengeluaran</h3>
+              </div>
               <div class="panel-body">
                 <!-- Tabel data -->
                 <div class="table-responsive">

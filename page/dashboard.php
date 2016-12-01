@@ -9,59 +9,20 @@
         </div>
       </section>
       <section class="content-box">
-        <div class="row">
-
-          <!-- Statistik Saldo -->
-          <div class="col-lg-4 col-md-6">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <i class="icon ion-calculator ion-fw size-50"></i>
-                  </div>
-                  <div class="col-xs-9 text-right">
-                    <div class="huge">Rp 10.000</div>
-                    <div>Saldo Anda</div>
-                  </div>
-                </div>
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Saldo anda</h3>
+          </div>
+          <div class="panel-body">
+            <div class="huge">
+              Rp 1.000.000
+            </div>
+            <div class="progress progress-striped active">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" style="width:96%;">
+                <span class="sr-only">96% Tercapai</span>
               </div>
             </div>
           </div>
-
-          <!-- Statistik Intcome -->
-          <div class="col-lg-4 col-md-6">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <i class="icon ion-android-arrow-down ion-fw size-50"></i>
-                  </div>
-                  <div class="col-xs-9 text-right">
-                    <div class="huge">Rp 10.000</div>
-                    <div>Income</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Statistik Outcome -->
-          <div class="col-lg-4 col-md-6">
-            <div class="panel panel-danger">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-3">
-                    <i class="icon ion-android-arrow-up ion-fw size-50"></i>
-                  </div>
-                  <div class="col-xs-9 text-right">
-                    <div class="huge">Rp 10.000</div>
-                    <div>Outcome</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </section>
     </main>

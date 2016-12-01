@@ -36,7 +36,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-info">
-              <div class="panel-heading">Data Pendapatan</div>
+              <div class="panel-heading">
+                <h3 class="panel-title">Data Pendapatan</h3>
+              </div>
               <div class="panel-body">
                 <!-- Tabel data -->
                 <div class="table-responsive">
@@ -47,21 +49,8 @@
                         <th>Dari</th>
                         <th>Tanggal</th>
                         <th>Nominal</th>
-                        <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Uang Saku</td>
-                        <td>13 November 2016</td>
-                        <td>Rp 10.000</td>
-                        <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-default" name="button">Edit</button>
-                          <button type="button" class="btn btn-sm btn-danger" name="button">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
                   </table>
                 </div>
               </div>
@@ -98,7 +87,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Tambahkan</button>
+            <button type="button" class="btn btn-primary" id="addIncome">Tambahkan</button>
           </div>
         </div>
       </div>

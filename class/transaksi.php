@@ -17,7 +17,7 @@ class Transaksi{
       $this->conn = $connectionStatus;
       $this->message = "Menunggu sebuah jawaban...";
 
-      if (isset($_POST['readInc'])) {
+      if (isset($_GET['readInc'])) {
         $this->action = "readIncome";
         $this->bacaIncome();
       }
@@ -63,7 +63,7 @@ class Transaksi{
       $query->execute($data);
 
       while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        $this->incomeData[] = $row;
+        $this->incomeData[] = array_values($row);
       }
 
       $this->eksekusi = 1;
@@ -86,9 +86,9 @@ class Transaksi{
         $response['message'] = $this->message;
     }
     if ($this->action == "readIncome") {
-        $response = $this->incomeData;
         $response['execute'] = $this->eksekusi;
         $response['message'] = $this->message;
+        $response['data'] = $this->incomeData;
     }
     return json_encode($response);
   }

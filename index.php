@@ -52,7 +52,7 @@ $halamannya->setPage();
       </div>
     </div>
     <!-- masukkan javascript disini -->
-    <script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="assets/jquery/jquery-1.12.3.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/icheck.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.selecter.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.stepper.min.js"></script>
@@ -61,7 +61,6 @@ $halamannya->setPage();
     <script type="text/javascript" src="assets/original/js/ajax-income.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        $('#income').dataTable();
         $('#outcome').dataTable();
       });
     </script>
