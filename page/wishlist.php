@@ -3,8 +3,8 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="breadcrumb breadcrumb-arrow">
-              <li class="active"><a href="?dashboard"><i class="icon ion-home ion-fw"></i>Home</a></li>
-              <li class="active"><span><i class="icon ion-android-cart"></i>&nbsp;Wishlist</span></li>
+              <li class="active"><a href="?dashboard"><i class="fa fa-fw fa-dashboard"></i>Dashboard</a></li>
+              <li class="active"><span><i class="fa fa-fw fa-shopping-cart"></i>&nbsp;Wishlist</span></li>
             </div>
           </div>
         </div>

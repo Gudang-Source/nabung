@@ -3,7 +3,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="breadcrumb breadcrumb-arrow">
-              <li class="active"><span><i class="icon ion-home ion-fw"></i>Home</span></li>
+              <li class="active"><span><i class="fa fa-fw fa-dashboard"></i>Dashboard</span></li>
             </div>
           </div>
         </div>

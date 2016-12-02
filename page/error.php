@@ -5,12 +5,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <span class="size-96">
-            <center><i class="icon ion-sad-outline fc-danger-light"></i></center>
-          </span>
+          <center><i class="fa fa-fw fa-chain-broken error-icon fc-danger-light"></i></center>
           <h2 class="error-title text-center">Connection Error!</h2>
           <div class="alert alert-danger error-box">
-            <h4><span class="icon ion-fw ion-alert-circled"></span>Terjadi kesalahan</h4>
+            <h4><span class="fa fa-fw fa-warning"></span>Terjadi kesalahan</h4>
             <p class="error-message error-message-danger"><?php echo $database->kesalahan();?></p>
             <a class="btn btn-danger error-button" data-toggle="modal" data-target="#laporkan">Laporkan</a>
           </div>

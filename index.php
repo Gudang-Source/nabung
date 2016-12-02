@@ -21,7 +21,7 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <!-- masukkan stylesheet disini -->
     <link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
-    <link type="text/css" rel="stylesheet" href="assets/ionicons/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="assets/datatables/datatables.min.css">
     <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
   </head>
