@@ -22,7 +22,6 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
     <link type="text/css" rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="assets/datatables/datatables.min.css">
     <link type="text/css" rel="stylesheet" href="assets/original/css/style.css">
   </head>
   <body>
@@ -57,12 +56,6 @@ $halamannya->setPage();
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.selecter.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.stepper.min.js"></script>
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript" src="assets/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="assets/original/js/ajax-income.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $('#outcome').dataTable();
-      });
-    </script>
   </body>
 </html>

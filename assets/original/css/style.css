@@ -118,15 +118,22 @@ html,body{
   padding: 30px;
 }
 
-/* inline form */
-.form-segaris{
-  margin-bottom: 20px;
+/* Tabel Data */
+.colNo{
+  width: 5%;
+  text-align: center;
 }
-@media screen and (min-width:512px){
-  .form-segaris>.form-group>input{
-    min-width: 200px;
-    margin-right: 20px;
-  }
+.colFor{
+  width: 25%;
+}
+.colDate{
+  width: 25%;
+}
+.colValue{
+  width: 25%;
+}
+.colAct{
+  width: 20%;
 }
 
 /* Keterangan */

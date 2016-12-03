@@ -4,7 +4,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="breadcrumb breadcrumb-arrow">
-              <li class="active"><a href="?dashboard"><i class="fa fa-fw fa-dashboard"></i>Dashboard</a></li>
+              <li class="active"><a href="?dashboard"><i class="fa fa-fw fa-dashboard"></i>&nbsp; Dashboard</a></li>
               <li class="active"><span><i class="fa fa-fw fa-arrow-circle-o-down"></i>&nbsp;Income</span></li>
             </div>
           </div>
@@ -40,18 +40,17 @@
                 <h3 class="panel-title">Data Pendapatan</h3>
               </div>
               <div class="panel-body">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" id="findText" class="form-control" placeholder="Pencarian">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-primary" onclick="findIncome()"><i class="fa fa-fw fa-search"></i>Cari!</button>
+                    </div>
+                  </div>
+                </div>
                 <!-- Tabel data -->
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="income">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Dari</th>
-                        <th>Tanggal</th>
-                        <th>Nominal</th>
-                      </tr>
-                    </thead>
-                  </table>
+                <div class="table-responsive" id="tableIncome">
                 </div>
               </div>
               <!-- Status total data -->
