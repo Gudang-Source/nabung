@@ -43,10 +43,10 @@
 
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" id="findText" class="form-control" placeholder="Pencarian">
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-primary" onclick="findIncome()"><i class="fa fa-fw fa-search"></i>Cari!</button>
-                    </div>
+                    <span class="input-group-addon">
+                      <i class="fa fa-fw fa-search"></i>
+                    </span>
+                    <input type="text" id="findText" class="form-control" onkeyup="findIncome()" placeholder="Pencarian">
                   </div>
                 </div>
                 <!-- Tabel data -->
@@ -87,6 +87,32 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
             <button type="button" class="btn btn-primary" id="addIncome">Tambahkan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit Income -->
+    <div id="modal-editinc" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Data</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="control-label" for="editFromInc">Dari</label>
+              <input type="text" class="form-control" id="editFromInc" placeholder="Asal">
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="editValueInc">Nominal</label>
+              <input type="text" class="form-control" id="editValueInc" placeholder="Nominal">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-default">Batal</button>
+            <button type="button" class="btn btn-primary">Simpan</button>
           </div>
         </div>
       </div>

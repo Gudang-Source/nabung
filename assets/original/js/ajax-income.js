@@ -1,10 +1,10 @@
 $("#addIncome").click(function () {
-  var income_for = $("#incDari").val();
+  var income_from = $("#incDari").val();
   var income_value = $("#incValue").val();
 
   $.post("page/response.php",{
     addInc: true,
-    income_for: income_for,
+    income_from: income_from,
     income_value: income_value
   }, function(data, status){
     var response = JSON.parse(data);
@@ -19,6 +19,19 @@ $("#addIncome").click(function () {
     $("#modal-addinc").modal("hide");
   });
 });
+
+function getIncomeData(id){
+  $.post("page/response.php",{
+    income_id: id,
+    getIncomeData: 1
+  },function(data) {
+    var incData = JSON.parse(data);
+      $("#editFromInc").val(incData.income_from);
+      $("#editValueInc").val(incData.income_value);
+    $("#modal-editinc").modal("show");
+  });
+
+}
 
 function delIncome(id){
   $.post("page/response.php",{
@@ -38,13 +51,16 @@ function delIncome(id){
 function findIncome(){
   var text2find = $("#findText").val();
 
-  $.post("page/response.php",{
-    
-  })
+  $.get("page/response.php",{
+    searchInc: text2find,
+    readInc: 1
+  }, function(data) {
+    $("#tableIncome").html(data);
+  });
 }
 
 function loadIncome() {
-  $.get("page/response.php?readInc",{
+  $.get("page/response.php",{
     readInc:1
   }, function(data) {
     $("#tableIncome").html(data);
