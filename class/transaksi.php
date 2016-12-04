@@ -69,12 +69,13 @@ class Transaksi{
 		$this->tableData = "<p class='text-center'>Anda belum memilih tanggal !</p>";
 	}else{
 		try {
-			//Untuk menghitung range bulan 
-			$getDate = explode('-',$_GET['income_date']);
-			$tahun = $getDate['0'];
-			$bulan = $getDate['1'];
-			$jumlahTanggal = cal_days_in_month(CAL_GREGORIAN,$bulan,$tahun);
+		  //Untuk menghitung range bulan 
+		  $getDate = explode('-',$_GET['income_date']);
+		  $tahun = $getDate['0'];
+		  $bulan = $getDate['1'];
+		  $jumlahTanggal = cal_days_in_month(CAL_GREGORIAN,$bulan,$tahun);
 			
+		  //Jika searchbar berisi, maka akan menampilkan hasil pencarian. Jika tidak, maka akan menampilkan semua data dibulan itu
 		  if (isset($_GET['searchInc'])) {
 			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last AND (income_from LIKE :findText OR income_date LIKE :findText OR income_value LIKE :findText)");
 			$data = array(
@@ -100,6 +101,16 @@ class Transaksi{
 		  if (empty($incomeData)) {
 			$this->tableData = "<div class='alert alert-warning'><p class='text-center'><i class='fa fa-fw fa-warning'></i>&nbsp;Tidak ditemukan</p></div>";
 		  }else{
+			//Hitung total bulan ini
+			$query2 = $this->conn->prepare("SELECT SUM(income_value) AS total FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last");
+			$data2 = array(
+				':user_id' => $_SESSION['id'],
+				':income_date_first' => $_GET['income_date']."-01",
+				':income_date_last' => $_GET['income_date']."-".$jumlahTanggal
+			);
+			$query2->execute($data2);
+			$total = $query2->fetch(PDO::FETCH_ASSOC);
+			
 			$tableData = "<table class='table table-bordered'>";
 			$tableData .= "<thead>";
 			$tableData .= "
@@ -129,6 +140,7 @@ class Transaksi{
 			}
 			$tableData .= "</tbody>";
 			$tableData .= "</table>";
+			$tableData .= "<div class='status-jumlah'><p>Jumlah bulan ini : Rp ".$total['total']."</p></div>";
 
 			$this->tableData = $tableData;
 		  }
