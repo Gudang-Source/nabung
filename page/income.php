@@ -111,8 +111,9 @@
             </div>
           </div>
           <div class="modal-footer">
+			<input type="hidden" id="idInc">
             <button type="button" data-dismiss="modal" class="btn btn-default">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-primary" onclick="updateIncomeData()">Simpan</button>
           </div>
         </div>
       </div>

@@ -32,20 +32,25 @@ class Transaksi{
         $this->action = "getTheData";
         $this->getIncomeData();
       }
+	  if (isset($_POST['updateInc'])){
+		$this->action = "saveTheData";
+		$this->updateIncomeData();
+	  }
     }else{
       $this->auth = 0;
     }
   }
-
+  
   private function tambahIncome(){
     if (empty($_POST['income_from']) || empty($_POST['income_value'])) {
       $this->eksekusi = 0;
       $this->message = "Data tidak boleh kosong!";
     }else{
       try {
-        $query = $this->conn->prepare("INSERT INTO income(income_from,income_value,user_id) VALUES(:income_from,:income_value,:user_id)");
+        $query = $this->conn->prepare("INSERT INTO income(income_from,income_date,income_value,user_id) VALUES(:income_from,:income_date,:income_value,:user_id)");
         $data = array(
           ':income_from' => $_POST['income_from'],
+		  ':income_date' => date("Y-m-d"),
           ':income_value' => $_POST['income_value'],
           ':user_id' => $_SESSION['id']
         );
@@ -157,7 +162,29 @@ class Transaksi{
       $this->message = "Kesalahan Terjadi : ".$e->getMessage();
     }
   }
-
+	
+  private function updateIncomeData(){
+	if(empty($_POST['upIncFrom']) && empty($_POST['upIncValue'])){
+		$this->message = "Data tidak boleh kosong!";
+		$this->eksekusi = 0;
+	}else{
+		try{
+			$query = $this->conn->prepare("UPDATE income SET income_from = :income_from, income_value = :income_value WHERE income_id = :income_id");
+			$data = array(
+				':income_id'	=> $_POST['upIncID'],
+				':income_from' 	=> $_POST['upIncFrom'],
+				':income_value' => $_POST['upIncValue']
+			);
+			$query->execute($data);
+			$this->message = "Data berhasil diupdate!";
+			$this->eksekusi = 1;
+		}catch(PDOException $e){
+			$this->message = "Data gagal diupdate : ".$e->getMessage();
+			$this->eksekusi = 0;
+		}		
+	}
+  }
+	
   public function response(){
     $response = array();
     if ($this->auth == 0) {
@@ -167,17 +194,26 @@ class Transaksi{
       if ($this->action == null) {
         $response['message'] = "Menunggu sebuah jawaban...";
         return json_encode($response);
-      }elseif ($this->action == "addIncome") {
+      }
+	  elseif ($this->action == "addIncome") {
         $response['message'] = $this->message;
         $response['execute'] = $this->eksekusi;
         return json_encode($response);
-      }elseif ($this->action == "deleteIncome") {
+      }
+	  elseif ($this->action == "deleteIncome") {
         $response['message'] = $this->message;
         $response['execute'] = $this->eksekusi;
         return json_encode($response);
-      }elseif ($this->action == "getTheData") {
+      }
+	  elseif ($this->action == "saveTheData"){
+		$response['message'] = $this->message;
+		$response['execute'] = $this->eksekusi;
+		return json_encode($response);
+	  }
+	  elseif ($this->action == "getTheData") {
         return json_encode($this->updateData);
-      }elseif($this->action == "readIncome") {
+      }
+	  elseif ($this->action == "readIncome") {
         return $this->tableData;
       }
     }
