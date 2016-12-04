@@ -87,7 +87,7 @@ class Transaksi{
         $tableData .= "
         <tr>
           <th class='colNo'>No.</th>
-          <th class='colFor'>Asalk</th>
+          <th class='colFor'>Asal</th>
           <th class='colDate'>Tanggal</th>
           <th class='colValue'>Nominal</th>
           <th class='colAct'>Aksi</th>

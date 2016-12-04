@@ -17,7 +17,7 @@ $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?php echo $halamannya->setTitle();?></title>
-
+	
     <!-- masukkan stylesheet disini -->
     <link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="assets/bootflat/css/bootflat.min.css">
