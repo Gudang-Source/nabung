@@ -119,6 +119,9 @@ html,body{
 }
 
 /* Tabel Data */
+table{
+  background-color:white;
+}
 .colNo{
   width: 5%;
   text-align: center;

@@ -18,9 +18,9 @@
           <div class="col-md-10">
             <div class="form-group">
               <div class="input-group">
-                <input type="month" class="form-control">
+                <input type="month" class="form-control" id="incShowDate">
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-primary" name="button">Tampilkan</button>
+                  <button type="button" class="btn btn-primary" onclick="loadIncome()" name="button">Tampilkan</button>
                 </div>
               </div>
             </div>
@@ -35,31 +35,23 @@
         <!-- Tampil data -->
         <div class="row">
           <div class="col-md-12">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h3 class="panel-title">Data Pendapatan</h3>
-              </div>
-              <div class="panel-body">
 
                 <div class="form-group">
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="fa fa-fw fa-search"></i>
                     </span>
-                    <input type="text" id="findText" class="form-control" onkeyup="findIncome()" placeholder="Pencarian">
+                    <input type="text" disabled id="findText" class="form-control" onkeyup="findIncome()" placeholder="Pencarian">
                   </div>
                 </div>
+				
                 <!-- Tabel data -->
+				<div class="alert alert-warning" id="alertNotShow" style="display:none;">
+					<p class="text-center"><i class="fa fa-fw fa-warning"></i>&nbsp;Anda harus memilih tanggal !</p>
+				</div>
                 <div class="table-responsive" id="tableIncome">
                 </div>
-              </div>
-              <!-- Status total data -->
-              <div class="panel-footer">
-                <p class="status-jumlah">
-                  Total : Rp 20000
-                </p>
-              </div>
-            </div>
+				
           </div>
         </div>
       </section>

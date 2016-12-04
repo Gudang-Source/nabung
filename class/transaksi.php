@@ -65,63 +65,77 @@ class Transaksi{
   }
 
   private function bacaIncome(){
-    try {
-      if (isset($_GET['searchInc'])) {
-        $query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND (income_from LIKE :findText OR income_date LIKE :findText OR income_value LIKE :findText)");
-        $data = array(
-          ':user_id' => $_SESSION['id'],
-          ':findText' => '%'.$_GET['searchInc'].'%'
-        );
-      }else{
-        $query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id");
-        $data = array(
-          ':user_id' => $_SESSION['id']
-        );
-      }
+	if (empty($_GET['income_date'])){
+		$this->tableData = "<p class='text-center'>Anda belum memilih tanggal !</p>";
+	}else{
+		try {
+			//Untuk menghitung range bulan 
+			$getDate = explode('-',$_GET['income_date']);
+			$tahun = $getDate['0'];
+			$bulan = $getDate['1'];
+			$jumlahTanggal = cal_days_in_month(CAL_GREGORIAN,$bulan,$tahun);
+			
+		  if (isset($_GET['searchInc'])) {
+			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last AND (income_from LIKE :findText OR income_date LIKE :findText OR income_value LIKE :findText)");
+			$data = array(
+			  ':user_id' => $_SESSION['id'],
+			  ':findText' => '%'.$_GET['searchInc'].'%',
+			  ':income_date_first' => $_GET['income_date']."-01",
+			  ':income_date_last' => $_GET['income_date']."-".$jumlahTanggal
+			);
+		  }else{
+			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last");
+			$data = array(
+			  ':user_id' => $_SESSION['id'],
+			  ':income_date_first' => $_GET['income_date']."-01",
+			  ':income_date_last' => $_GET['income_date']."-".$jumlahTanggal
+			);
+		  }
 
-      $query->execute($data);
-      while($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        $incomeData[] = $row;
-      }
+		  $query->execute($data);
+		  while($row = $query->fetch(PDO::FETCH_ASSOC)) {
+			$incomeData[] = $row;
+		  }
 
-      if (empty($incomeData)) {
-        $this->tableData = "<p class='text-center'>Tidak ditemukan</p>";
-      }else{
-        $tableData = "<table class='table table-bordered'>";
-        $tableData .= "<thead>";
-        $tableData .= "
-        <tr>
-          <th class='colNo'>No.</th>
-          <th class='colFor'>Asal</th>
-          <th class='colDate'>Tanggal</th>
-          <th class='colValue'>Nominal</th>
-          <th class='colAct'>Aksi</th>
-        </tr>";
-        $tableData .= "</thead>";
+		  if (empty($incomeData)) {
+			$this->tableData = "<div class='alert alert-warning'><p class='text-center'><i class='fa fa-fw fa-warning'></i>&nbsp;Tidak ditemukan</p></div>";
+		  }else{
+			$tableData = "<table class='table table-bordered'>";
+			$tableData .= "<thead>";
+			$tableData .= "
+			<tr>
+			  <th class='colNo'>No.</th>
+			  <th class='colFor'>Asal</th>
+			  <th class='colDate'>Tanggal</th>
+			  <th class='colValue'>Nominal</th>
+			  <th class='colAct'>Aksi</th>
+			</tr>";
+			$tableData .= "</thead>";
 
-        $tableData .= "<tbody>";
-        $no = 1;
-        foreach ($incomeData as $data) {
-              $tableData .="
-              <tr>
-                <td class='text-center'>".$no++."</td>
-                <td>".$data['income_from']."</td>
-                <td>".$data['income_date']."</td>
-                <td>".$data['income_value']."</td>
-                <td class='text-center'>
-                  <button class='btn btn-default btn-sm' onclick='getIncomeData(".$data['income_id'].")'><i class='fa fa-fw fa-edit'></i>Edit</button>
-                  <button class='btn btn-danger btn-sm' onclick='delIncome(".$data['income_id'].")'><i class='fa fa-fw fa-remove'></i>Delete</button>
-                </td>
-              </tr>";
-        }
-        $tableData .= "</tbody>";
-        $tableData .= "</table>";
+			$tableData .= "<tbody>";
+			$no = 1;
+			foreach ($incomeData as $data) {
+				  $tableData .="
+				  <tr>
+					<td class='text-center'>".$no++."</td>
+					<td>".$data['income_from']."</td>
+					<td>".$data['income_date']."</td>
+					<td>".$data['income_value']."</td>
+					<td class='text-center'>
+					  <button class='btn btn-default btn-sm' onclick='getIncomeData(".$data['income_id'].")'><i class='fa fa-fw fa-edit'></i>Edit</button>
+					  <button class='btn btn-danger btn-sm' onclick='delIncome(".$data['income_id'].")'><i class='fa fa-fw fa-remove'></i>Delete</button>
+					</td>
+				  </tr>";
+			}
+			$tableData .= "</tbody>";
+			$tableData .= "</table>";
 
-        $this->tableData = $tableData;
-      }
-    }catch (PDOException $e) {
-      $this->tableData = "Kesalahan terjadi : ".$e->getMessage();
-    }
+			$this->tableData = $tableData;
+		  }
+		}catch (PDOException $e) {
+		  $this->tableData = "Kesalahan terjadi : ".$e->getMessage();
+		}
+	}
     return $this->tableData;
   }
 

@@ -76,24 +76,43 @@ function delIncome(id){
 }
 
 function findIncome(){
+  var date2show = $("#incShowDate").val();
   var text2find = $("#findText").val();
-
-  $.get("page/response.php",{
-    searchInc: text2find,
-    readInc: 1
-  }, function(data) {
-    $("#tableIncome").html(data);
-  });
+  
+  if(date2show == ""){
+	$("#findText").attr("disabled",1);
+	$("#alertNotShow").fadeIn(300, function(){
+		$("#alertNotShow").delay(1000).fadeOut(300);
+	});
+	$("#tableIncome").html("");
+  }else{
+	  $("#findText").removeAttr("disabled");
+	  $.get("page/response.php",{
+		income_date: date2show,
+		searchInc: text2find,
+		readInc: 1
+	  }, function(data) {
+		$("#tableIncome").html(data);
+	  });
+  }
 }
 
 function loadIncome() {
-  $.get("page/response.php",{
-    readInc:1
-  }, function(data) {
-    $("#tableIncome").html(data);
-  });
+  var date2show = $("#incShowDate").val();
+  
+  if(date2show == ""){
+	$("#findText").attr("disabled",1);
+	$("#alertNotShow").fadeIn(300, function(){
+		$("#alertNotShow").delay(1000).fadeOut(300);
+	});
+	$("#tableIncome").html("");
+  }else{
+	  $("#findText").removeAttr("disabled");
+	  $.get("page/response.php",{
+		readInc:1,
+		income_date: date2show
+	  }, function(data) {
+		$("#tableIncome").html(data);
+	  });
+  }
 }
-
-$(document).ready(function(){
-  loadIncome();
-});
