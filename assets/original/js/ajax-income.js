@@ -12,7 +12,9 @@ $("#addIncome").click(function () {
       alert(response.message);
       $("#incDari").val("");
       $("#incValue").val("");
-      loadIncome();
+	if($("#incShowDate").val() != ""){
+	  loadIncome();
+	}
     }else{
       alert(response.message);
     }
