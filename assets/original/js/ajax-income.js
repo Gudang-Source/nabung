@@ -1,6 +1,7 @@
 $("#addIncome").click(function () {
   var income_from = $("#incDari").val();
   var income_value = $("#incValue").val();
+  var page = $("#disPage").text();
 
   $.post("page/response.php",{
     addInc: true,
@@ -13,7 +14,7 @@ $("#addIncome").click(function () {
       $("#incDari").val("");
       $("#incValue").val("");
 	if($("#incShowDate").val() != ""){
-	  loadIncome();
+	  loadIncome(page);
 	}
     }else{
       alert(response.message);
@@ -40,6 +41,7 @@ function updateIncomeData(){
 	var income_id = $("#idInc").val();
 	var income_from = $("#editFromInc").val();
 	var income_value = $("#editValueInc").val();
+    var page = $("#disPage").text();
 	
   $.post("page/response.php",{
 	upIncID: income_id,
@@ -51,15 +53,16 @@ function updateIncomeData(){
 		if(response.execute == 1){
 			alert(response.message);
 			$("#modal-editinc").modal("hide");
+            loadIncome(page);
 		}else{
 			alert(response.message);
 		}
-		loadIncome();
   });
 }
 
 function delIncome(id){
   var bool = confirm("Anda yakin ingin menghapus ini?");
+  var page = $("#disPage").text();
   
   if(bool == true){
 	  $.post("page/response.php",{
@@ -69,7 +72,7 @@ function delIncome(id){
 		var response = JSON.parse(data);
 		if (response.execute == 1) {
 		  alert(response.message);
-		  loadIncome();
+		  loadIncome(page);
 		}else{
 		  alert(response.message);
 		}
@@ -77,7 +80,7 @@ function delIncome(id){
   }
 }
 
-function findIncome(){
+function loadIncome(pagination) {
   var date2show = $("#incShowDate").val();
   var text2find = $("#findText").val();
   
@@ -89,32 +92,23 @@ function findIncome(){
 	$("#tableIncome").html("");
   }else{
 	  $("#findText").removeAttr("disabled");
-	  $.get("page/response.php",{
-		income_date: date2show,
-		searchInc: text2find,
-		readInc: 1
-	  }, function(data) {
-		$("#tableIncome").html(data);
-	  });
-  }
-}
-
-function loadIncome() {
-  var date2show = $("#incShowDate").val();
-  
-  if(date2show == ""){
-	$("#findText").attr("disabled",1);
-	$("#alertNotShow").fadeIn(300, function(){
-		$("#alertNotShow").delay(1000).fadeOut(300);
-	});
-	$("#tableIncome").html("");
-  }else{
-	  $("#findText").removeAttr("disabled");
-	  $.get("page/response.php",{
-		readInc:1,
-		income_date: date2show
-	  }, function(data) {
-		$("#tableIncome").html(data);
-	  });
+      if(text2find == ""){
+          $.get("page/response.php",{
+            readInc:1,
+            income_date: date2show,
+            hal: pagination
+          }, function(data) {
+            $("#tableIncome").html(data);
+          });
+      }else{
+          $.get("page/response.php",{
+            income_date: date2show,
+            searchInc: text2find,
+            hal: pagination,
+            readInc: 1
+          }, function(data) {
+            $("#tableIncome").html(data);
+          });
+      }
   }
 }

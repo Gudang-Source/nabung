@@ -6,7 +6,7 @@ class Transaksi{
   private $updateData;
 
   private $auth;
-
+  
   private $message;
   private $eksekusi;
   private $action;
@@ -40,7 +40,13 @@ class Transaksi{
       $this->auth = 0;
     }
   }
-  
+
+/*
+=========================
+    Income Method
+=========================
+*/
+ 
   private function tambahIncome(){
     if (empty($_POST['income_from']) || empty($_POST['income_value'])) {
       $this->eksekusi = 0;
@@ -74,30 +80,65 @@ class Transaksi{
 		  $tahun = $getDate['0'];
 		  $bulan = $getDate['1'];
 		  $jumlahTanggal = cal_days_in_month(CAL_GREGORIAN,$bulan,$tahun);
-			
+      $first = array($tahun,$bulan,'01');
+      $last = array($tahun,$bulan,$jumlahTanggal);
+      $resultFirstDate = implode("-",$first);
+      $resultLastDate = implode("-",$last);
+  
+      //Pagination Bagian 1
+      $batasData = 5;
+      if(empty($_GET['hal'])){
+        $halamanIni = 1;
+      }else{
+        $halamanIni = $_GET['hal'];
+      }
+      $posisi = (($halamanIni - 1)*$batasData);
+          
 		  //Jika searchbar berisi, maka akan menampilkan hasil pencarian. Jika tidak, maka akan menampilkan semua data dibulan itu
 		  if (isset($_GET['searchInc'])) {
-			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last AND (income_from LIKE :findText OR income_date LIKE :findText OR income_value LIKE :findText)");
-			$data = array(
-			  ':user_id' => $_SESSION['id'],
-			  ':findText' => '%'.$_GET['searchInc'].'%',
-			  ':income_date_first' => $_GET['income_date']."-01",
-			  ':income_date_last' => $_GET['income_date']."-".$jumlahTanggal
-			);
+      $serch = "%{$_GET['searchInc']}%";
+      //No Limit
+      $queryJumlahData = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last AND (income_from LIKE :findText OR income_date LIKE :findText OR income_value LIKE :findText)");
+        $queryJumlahData->bindParam(':user_id', $_SESSION['id']);
+        $queryJumlahData->bindParam(':findText', $serch);
+        $queryJumlahData->bindParam(':income_date_first', $resultFirstDate);
+        $queryJumlahData->bindParam(':income_date_last', $resultLastDate);
+            
+      //With Limit
+			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last AND (income_from LIKE :findText OR income_date LIKE :findText OR income_value LIKE :findText) ORDER BY income_date ASC LIMIT :posisi, :batasData");
+			  $query->bindParam(':user_id', $_SESSION['id']);
+        $query->bindParam(':findText', $serch);
+        $query->bindParam(':income_date_first', $resultFirstDate);
+        $query->bindParam(':income_date_last', $resultLastDate);
+        $query->bindParam(':posisi', $posisi, PDO::PARAM_INT);
+        $query->bindParam(':batasData', $batasData, PDO::PARAM_INT);
 		  }else{
-			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last");
-			$data = array(
-			  ':user_id' => $_SESSION['id'],
-			  ':income_date_first' => $_GET['income_date']."-01",
-			  ':income_date_last' => $_GET['income_date']."-".$jumlahTanggal
-			);
+      //No Limit
+      $queryJumlahData = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last");
+        $queryJumlahData->bindParam(':user_id', $_SESSION['id']);
+        $queryJumlahData->bindParam(':income_date_first', $resultFirstDate);
+        $queryJumlahData->bindParam(':income_date_last', $resultLastDate);
+            
+            //With Limit
+			$query = $this->conn->prepare("SELECT * FROM income WHERE user_id = :user_id AND income_date BETWEEN :income_date_first AND :income_date_last ORDER BY income_date ASC LIMIT :posisi, :batasData");
+			  $query->bindParam(':user_id', $_SESSION['id']);
+        $query->bindParam(':income_date_first', $resultFirstDate);
+        $query->bindParam(':income_date_last', $resultLastDate);
+        $query->bindParam(':posisi', $posisi, PDO::PARAM_INT);
+        $query->bindParam(':batasData', $batasData, PDO::PARAM_INT);
 		  }
+          
+      $query->execute();
+      $queryJumlahData->execute();
+      
+      //Pagination Bagian 2
+      $jumlahData = $queryJumlahData->rowCount();
+      $jumlahPage = ceil($jumlahData/$batasData);
 
-		  $query->execute($data);
 		  while($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			$incomeData[] = $row;
 		  }
-
+           
 		  if (empty($incomeData)) {
 			$this->tableData = "<div class='alert alert-warning'><p class='text-center'><i class='fa fa-fw fa-warning'></i>&nbsp;Tidak ditemukan</p></div>";
 		  }else{
@@ -122,11 +163,12 @@ class Transaksi{
 			  <th class='colAct'>Aksi</th>
 			</tr>";
 			$tableData .= "</thead>";
-
 			$tableData .= "<tbody>";
-			$no = 1;
+            
+      //Penomoran dimulai
+      $no = $posisi + 1;
 			foreach ($incomeData as $data) {
-				  $tableData .="
+				  $tableData .= "
 				  <tr>
 					<td class='text-center'>".$no++."</td>
 					<td>".$data['income_from']."</td>
@@ -141,7 +183,16 @@ class Transaksi{
 			$tableData .= "</tbody>";
 			$tableData .= "</table>";
 			$tableData .= "<div class='status-jumlah'><p>Jumlah bulan ini : Rp ".$total['total']."</p></div>";
-
+      $tableData .= "<div class='text-center'>";
+      $tableData .= "<ul class='pagination'>";
+      for($i=1; $i<=$jumlahPage; $i++){
+          $tableData .= "
+          <li><a href='#' onclick='loadIncome(".$i.")'>".$i."</a></li>
+          ";
+      }
+      $tableData .= "</ul>";
+      $tableData .= "</div>";
+      $tableData .= "<p class='hidden' id='disPage'>".$halamanIni."</p>";
 			$this->tableData = $tableData;
 		  }
 		}catch (PDOException $e) {
@@ -210,6 +261,12 @@ class Transaksi{
 		}		
 	}
   }
+
+/*
+ =========================
+    Response Method
+ =========================
+*/
 	
   public function response(){
     $response = array();

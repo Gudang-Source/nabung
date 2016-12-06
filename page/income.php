@@ -20,7 +20,7 @@
               <div class="input-group">
                 <input type="month" class="form-control" id="incShowDate">
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-primary" onclick="loadIncome()" name="button">Tampilkan</button>
+                  <button type="button" class="btn btn-primary" onclick="loadIncome(1)" name="button">Tampilkan</button>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@
                     <span class="input-group-addon">
                       <i class="fa fa-fw fa-search"></i>
                     </span>
-                    <input type="text" disabled id="findText" class="form-control" onkeyup="findIncome()" placeholder="Pencarian">
+                    <input type="text" disabled id="findText" class="form-control" onkeyup="loadIncome(1)" placeholder="Pencarian">
                   </div>
                 </div>
 				
