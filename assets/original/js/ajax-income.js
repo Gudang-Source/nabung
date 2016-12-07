@@ -63,6 +63,7 @@ function updateIncomeData(){
 function delIncome(id){
   var bool = confirm("Anda yakin ingin menghapus ini?");
   var page = $("#disPage").text();
+  var pageData = $("#disCount").text();
   
   if(bool == true){
 	  $.post("page/response.php",{
@@ -72,7 +73,11 @@ function delIncome(id){
 		var response = JSON.parse(data);
 		if (response.execute == 1) {
 		  alert(response.message);
-		  loadIncome(page);
+        if(pageData == 1){
+          loadIncome(parseInt(page) - 1);
+        }else{
+          loadIncome(page);
+        }
 		}else{
 		  alert(response.message);
 		}

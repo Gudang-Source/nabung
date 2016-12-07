@@ -131,6 +131,9 @@ class Transaksi{
       $query->execute();
       $queryJumlahData->execute();
       
+      //Hitung jumlah data pada page itu
+      $jumlahDataShow = $query->rowCount();
+
       //Pagination Bagian 2
       $jumlahData = $queryJumlahData->rowCount();
       $jumlahPage = ceil($jumlahData/$batasData);
@@ -193,6 +196,7 @@ class Transaksi{
       $tableData .= "</ul>";
       $tableData .= "</div>";
       $tableData .= "<p class='hidden' id='disPage'>".$halamanIni."</p>";
+      $tableData .= "<p class='hidden' id='disCount'>".$jumlahDataShow."</p>";
 			$this->tableData = $tableData;
 		  }
 		}catch (PDOException $e) {
