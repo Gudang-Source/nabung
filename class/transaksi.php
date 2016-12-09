@@ -154,8 +154,28 @@ class Transaksi{
 			);
 			$query2->execute($data2);
 			$total = $query2->fetch(PDO::FETCH_ASSOC);
-			
-			$tableData = "<table class='table table-bordered'>";
+
+      $tableData = "<div class='text-center'>";
+      $tableData .= "<ul class='pagination'>";
+      if($halamanIni < 2){
+        $tableData .= "<li class='disabled'><a href='#'>Previous</a></li>";
+      }else{
+        $tableData .= "<li><a href='#' onclick='loadIncome(".($halamanIni - 1).")'>Previous</a></li>";
+      }
+      for($i=1; $i<=$jumlahPage; $i++){
+          $tableData .= "
+          <li><a href='#' onclick='loadIncome(".$i.")'>".$i."</a></li>
+          ";
+      }
+      if(($jumlahPage - $halamanIni) < 1){
+        $tableData .= "<li class='disabled'><a href='#'>Next</a></li>";
+      }else{
+        $tableData .= "<li><a href='#' onclick='loadIncome(".($halamanIni + 1).")'>Next</a></li>";
+      }
+      $tableData .= "</ul>";
+      $tableData .= "</div>";
+
+			$tableData .= "<table class='table table-bordered'>";
 			$tableData .= "<thead>";
 			$tableData .= "
 			<tr>
@@ -186,15 +206,6 @@ class Transaksi{
 			$tableData .= "</tbody>";
 			$tableData .= "</table>";
 			$tableData .= "<div class='status-jumlah'><p>Jumlah bulan ini : Rp ".$total['total']."</p></div>";
-      $tableData .= "<div class='text-center'>";
-      $tableData .= "<ul class='pagination'>";
-      for($i=1; $i<=$jumlahPage; $i++){
-          $tableData .= "
-          <li><a href='#' onclick='loadIncome(".$i.")'>".$i."</a></li>
-          ";
-      }
-      $tableData .= "</ul>";
-      $tableData .= "</div>";
       $tableData .= "<p class='hidden' id='disPage'>".$halamanIni."</p>";
       $tableData .= "<p class='hidden' id='disCount'>".$jumlahDataShow."</p>";
 			$this->tableData = $tableData;
