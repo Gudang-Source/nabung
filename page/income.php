@@ -35,7 +35,7 @@
         <!-- Tampil data -->
         <div class="row">
           <div class="col-md-12">
-
+                <!-- Search bar -->
                 <div class="form-group">
                   <div class="input-group">
                     <span class="input-group-addon">
@@ -46,12 +46,10 @@
                 </div>
 				
                 <!-- Tabel data -->
-				<div class="alert alert-warning" id="alertNotShow" style="display:none;">
-					<p class="text-center"><i class="fa fa-fw fa-warning"></i>&nbsp;Anda harus memilih tanggal !</p>
-				</div>
-                <div class="table-responsive" id="tableIncome">
+                <div class="alert alert-warning" id="alertNotShow" style="display:none;">
+                  <p class="text-center"><i class="fa fa-fw fa-warning"></i>&nbsp;Anda harus memilih tanggal !</p>
                 </div>
-				
+                <div class="table-responsive" id="tableIncome"></div>
           </div>
         </div>
       </section>

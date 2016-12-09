@@ -34,45 +34,18 @@
         <!-- Tampil data -->
         <div class="row">
           <div class="col-md-12">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h3 class="panel-title">Data Pengeluaran</h3>
-              </div>
-              <div class="panel-body">
-                <!-- Tabel data -->
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="outcome">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Untuk</th>
-                        <th>Tanggal</th>
-                        <th>Nominal</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Uang Saku</td>
-                        <td>13 November 2016</td>
-                        <td>Rp 10.000</td>
-                        <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-default" name="button">Edit</button>
-                          <button type="button" class="btn btn-sm btn-danger" name="button">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <!-- Status total data -->
-              <div class="panel-footer">
-                <p class="status-jumlah">
-                  Total : Rp 20000
-                </p>
+          <!-- Search Bar -->
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span>
+                <input type="text" disabled class="form-control" placeholder="Pencarian">
               </div>
             </div>
+          
+          <!-- Data -->
+          <div class="table-responsive" id="tableOutcome">
+            
+          </div>
           </div>
         </div>
       </section>

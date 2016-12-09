@@ -293,9 +293,9 @@ class Transaksi{
         return json_encode($response);
       }
 	  elseif ($this->action == "saveTheData"){
-		$response['message'] = $this->message;
-		$response['execute'] = $this->eksekusi;
-		return json_encode($response);
+        $response['message'] = $this->message;
+        $response['execute'] = $this->eksekusi;
+        return json_encode($response);
 	  }
 	  elseif ($this->action == "getTheData") {
         return json_encode($this->updateData);
