@@ -42,9 +42,9 @@ class Transaksi{
   }
 
 /*
-=========================
+  =======================
     Income Method
-=========================
+  =======================
 */
  
   private function tambahIncome(){
@@ -306,31 +306,54 @@ class Transaksi{
   }
 	
   private function updateIncomeData(){
-	if(empty($_POST['upIncFrom']) && empty($_POST['upIncValue'])){
-		$this->message = "Data tidak boleh kosong!";
-		$this->eksekusi = 0;
-	}else{
-		try{
-			$query = $this->conn->prepare("UPDATE income SET income_from = :income_from, income_value = :income_value WHERE income_id = :income_id");
-			$data = array(
-				':income_id'	=> $_POST['upIncID'],
-				':income_from' 	=> $_POST['upIncFrom'],
-				':income_value' => $_POST['upIncValue']
-			);
-			$query->execute($data);
-			$this->message = "Data berhasil diupdate!";
-			$this->eksekusi = 1;
-		}catch(PDOException $e){
-			$this->message = "Data gagal diupdate : ".$e->getMessage();
-			$this->eksekusi = 0;
-		}		
-	}
+  	if(empty($_POST['upIncFrom']) && empty($_POST['upIncValue'])){
+    		$this->message = "Data tidak boleh kosong!";
+    		$this->eksekusi = 0;
+  	}else{
+    		try{
+    			$query = $this->conn->prepare("UPDATE income SET income_from = :income_from, income_value = :income_value WHERE income_id = :income_id");
+    			$data = array(
+    				':income_id'	=> $_POST['upIncID'],
+    				':income_from' 	=> $_POST['upIncFrom'],
+    				':income_value' => $_POST['upIncValue']
+    			);
+    			$query->execute($data);
+    			$this->message = "Data berhasil diupdate!";
+    			$this->eksekusi = 1;
+    		}catch(PDOException $e){
+    			$this->message = "Data gagal diupdate : ".$e->getMessage();
+    			$this->eksekusi = 0;
+    		}		
+    	}
   }
 
 /*
- =========================
+ ========================
+    Outcome Method
+ ========================
+*/
+
+ private function tambahOutcome(){
+    
+ }
+ private function bacaOutcome(){
+
+ }
+ private function hapusOutcome(){
+
+ }
+ private function getOutcomeData(){
+
+ }
+ private function updateIncomeData(){
+
+ }
+
+
+/*
+ ========================
     Response Method
- =========================
+ ========================
 */
 	
   public function response(){
@@ -343,7 +366,7 @@ class Transaksi{
         $response['message'] = "Menunggu sebuah jawaban...";
         return json_encode($response);
       }
-	  elseif ($this->action == "addIncome") {
+    elseif ($this->action == "addIncome") {
         $response['message'] = $this->message;
         $response['execute'] = $this->eksekusi;
         return json_encode($response);
@@ -360,7 +383,7 @@ class Transaksi{
 	  }
 	  elseif ($this->action == "getTheData") {
         return json_encode($this->updateData);
-      }
+    }
 	  elseif ($this->action == "readIncome") {
         return $this->tableData;
       }

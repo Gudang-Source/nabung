@@ -17,7 +17,7 @@
           <div class="col-md-10">
             <div class="form-group">
               <div class="input-group">
-                <input type="month" class="form-control">
+                <input type="month" class="form-control" id="outShowDate">
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-primary" name="button">Tampilkan</button>
                 </div>
@@ -38,14 +38,15 @@
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span>
-                <input type="text" disabled class="form-control" placeholder="Pencarian">
+                <input type="text" disabled id="findText" class="form-control" placeholder="Pencarian">
               </div>
             </div>
           
-          <!-- Data -->
-          <div class="table-responsive" id="tableOutcome">
-            
-          </div>
+            <div class="alert alert-warning" id="alertNotShow" style="display:none;">
+              <p class="text-center"><i class="fa fa-fw fa-warning"></i>&nbsp;Anda harus memilih tanggal !</p>
+            </div>
+            <!-- Data -->
+            <div class="table-responsive" id="tableOutcome"></div>
           </div>
         </div>
       </section>
@@ -63,7 +64,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label class="control-label" for="#outFor">Untuk</label>
-              <input type="text" id="outFor" class="form-control" placeholder="Tujuan Pengeluaran">
+              <input type="text" id="outUntuk" class="form-control" placeholder="Tujuan Pengeluaran">
             </div>
             <div class="form-group">
               <label class="control-label" for="#outValue">Nominal</label>
@@ -72,7 +73,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Tambahkan</button>
+            <button type="button" class="btn btn-primary" id="addOutcome">Tambahkan</button>
           </div>
         </div>
       </div>
