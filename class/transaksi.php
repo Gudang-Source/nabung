@@ -155,26 +155,54 @@ class Transaksi{
 			$query2->execute($data2);
 			$total = $query2->fetch(PDO::FETCH_ASSOC);
 
-      $tableData = "<div class='text-center'>";
+      //Paginasi
+      $tableData = "<div class='text-left'>";
       $tableData .= "<ul class='pagination'>";
       if($halamanIni < 2){
-        $tableData .= "<li class='disabled'><a href='#'>Previous</a></li>";
+        $tableData .= "<li class='disabled'><a href='#'>&laquo;</a></li>";
       }else{
-        $tableData .= "<li><a href='#' onclick='loadIncome(".($halamanIni - 1).")'>Previous</a></li>";
+        $tableData .= "<li><a href='#' onclick='loadIncome(".($halamanIni - 1).")'>&laquo;</a></li>";
       }
-      for($i=1; $i<=$jumlahPage; $i++){
+      
+      //Menetukan dimulai dari mana
+      $position = $halamanIni;
+      $selisihPos = $jumlahPage - $halamanIni;
+
+      if ($position == 1) {       //Pejwan
+        $startFrom = $position;
+        if($selisihPos < 2){
+          $endTo = $position + $selisihPos;
+        }else{
+          $endTo = $position + 2;
+        }
+        
+      }elseif ($position == $jumlahPage) {     //Pejlas
+        if(($position - 2) < 1){
+          $startFrom = $position - 1;
+        }else{
+          $startFrom = $position - 2;
+        }
+        $endTo = $position;
+      }else{ 
+        $startFrom = $position - 1; 
+        $endTo = $position + 1;
+      }
+
+      for($i=$startFrom; $i <= $jumlahPaginate; $i++){
           $tableData .= "
           <li><a href='#' onclick='loadIncome(".$i.")'>".$i."</a></li>
           ";
       }
+
       if(($jumlahPage - $halamanIni) < 1){
-        $tableData .= "<li class='disabled'><a href='#'>Next</a></li>";
+        $tableData .= "<li class='disabled'><a href='#'>&raquo</a></li>";
       }else{
-        $tableData .= "<li><a href='#' onclick='loadIncome(".($halamanIni + 1).")'>Next</a></li>";
+        $tableData .= "<li><a href='#' onclick='loadIncome(".($halamanIni + 1).")'>&raquo</a></li>";
       }
       $tableData .= "</ul>";
       $tableData .= "</div>";
 
+      //Data Tabel
 			$tableData .= "<table class='table table-bordered'>";
 			$tableData .= "<thead>";
 			$tableData .= "
