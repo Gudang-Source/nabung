@@ -13,9 +13,9 @@ $("#addIncome").click(function () {
       alert(response.message);
       $("#incDari").val("");
       $("#incValue").val("");
-	if($("#incShowDate").val() != ""){
-	  loadIncome(page);
-	}
+    	if($("#incShowDate").val() != ""){
+    	  loadIncome(page);
+    	}
     }else{
       alert(response.message);
     }

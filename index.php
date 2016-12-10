@@ -57,5 +57,6 @@ $halamannya->setPage();
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.stepper.min.js"></script>
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="assets/original/js/ajax-income.js"></script>
+    <script type="text/javascript" src="assets/original/js/ajax-outcome.js"></script>
   </body>
 </html>

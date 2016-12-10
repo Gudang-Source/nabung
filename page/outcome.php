@@ -19,7 +19,7 @@
               <div class="input-group">
                 <input type="month" class="form-control" id="outShowDate">
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-primary" name="button">Tampilkan</button>
+                  <button type="button" class="btn btn-primary" onclick="loadOutcome(1)" name="button">Tampilkan</button>
                 </div>
               </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span>
-                <input type="text" disabled id="findText" class="form-control" placeholder="Pencarian">
+                <input type="text" disabled id="outFindText" class="form-control" onkeyup="loadOutcome(1)" placeholder="Pencarian">
               </div>
             </div>
           
