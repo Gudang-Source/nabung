@@ -11,7 +11,7 @@
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary btn-block" name="login" type="submit">Masuk</button>
-                  <a class="btn btn-danger btn-block" href="?p=register">Daftar</a>
+                  <a class="btn btn-link btn-block" href="?p=register">Tidak punya akun? Daftar!</a>
                 </div>
             </form>
           </div>

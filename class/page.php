@@ -52,6 +52,8 @@
         $title = "No Session Detected";
       }elseif ($this->page == "sessiondetect") {
         $title = "Session Detected";
+      }elseif ($this->page == "register") {
+        $title = "Daftar Pengguna Baru";
       }else{
         $title = "404 Not Found";
       }
@@ -77,6 +79,8 @@
         include_once 'page/errorLogin.php';
       }elseif ($this->page == "sessiondetect") {
         include_once 'page/sessionDetected.php';
+      }elseif ($this->page == "register") {
+        include_once 'page/register.php';
       }else{
         include_once 'page/404.php';
       }
