@@ -145,3 +145,14 @@ table{
   margin-bottom: 0;
   text-align: center;
 }
+
+/* Box Dashboard */
+.box-dashboard{
+  background-color: #48CFAD;
+  margin: 5px 0px;
+}
+.box-icon{
+  font-size: 50px;
+  padding: 5px;
+  width: 
+}
