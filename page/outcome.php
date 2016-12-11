@@ -78,3 +78,30 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal Edit Income -->
+    <div id="modal-editout" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Data</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="control-label" for="editFromInc">Untuk</label>
+              <input type="text" class="form-control" id="editForOut" placeholder="Tujuan Pengeluaran">
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="editValueInc">Nominal</label>
+              <input type="text" class="form-control" id="editValueOut" placeholder="Nominal Pengeluaran">
+            </div>
+          </div>
+          <div class="modal-footer">
+      <input type="hidden" id="idOut">
+            <button type="button" data-dismiss="modal" class="btn btn-default">Batal</button>
+            <button type="button" class="btn btn-primary" onclick="updateOutcomeData()">Simpan</button>
+          </div>
+        </div>
+      </div>
+    </div>

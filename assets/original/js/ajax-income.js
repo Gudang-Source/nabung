@@ -16,10 +16,10 @@ $("#addIncome").click(function () {
     	if($("#incShowDate").val() != ""){
     	  loadIncome(page);
     	}
+      $("#modal-addinc").modal("hide");
     }else{
       alert(response.message);
     }
-    $("#modal-addinc").modal("hide");
   });
 });
 

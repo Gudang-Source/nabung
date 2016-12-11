@@ -51,6 +51,14 @@ class Transaksi{
         $this->action = "deleteOutcome";
         $this->deleteOutcome();
       }
+      if (isset($_POST['getOutcomeData'])) {
+        $this->action = "getOutData";
+        $this->getOutcomeData();
+      }
+      if (isset($_POST['updateOut'])) {
+        $this->action = "saveOutData";
+        $this->updateOutcomeData();
+      }
 
     }else{
       $this->auth = 0;
@@ -276,32 +284,32 @@ class Transaksi{
      $tableData .= "<p class='hidden' id='disCount'>".$jumlahDataShow."</p>";
      $this->tableData = $tableData;
    }
- }catch (PDOException $e) {
-  $this->tableData = "Kesalahan terjadi : ".$e->getMessage();
-}
-}
-return $this->tableData;
-}
+     }catch (PDOException $e) {
+      $this->tableData = "Kesalahan terjadi : ".$e->getMessage();
+    }
+    }
+    return $this->tableData;
+    }
 
-private function hapusIncome(){
-  if (empty($_POST['income_id'])) {
-    $this->eksekusi = 0;
-    $this->message = "ID Tidak Ditemukan";
-  }else{
-    try {
-      $query = $this->conn->prepare("DELETE FROM income WHERE income_id = :income_id");
-      $data = array(
-        ':income_id' => $_POST['income_id']
-        );
-      $query->execute($data);
-      $this->eksekusi = 1;
-      $this->message = "Data berhasil dihapus";
-    } catch (PDOException $e) {
+  private function hapusIncome(){
+    if (empty($_POST['income_id'])) {
       $this->eksekusi = 0;
-      $this->message = "Data tidak bisa dihapus : ".$e->getMessage();
+      $this->message = "ID Tidak Ditemukan";
+    }else{
+      try {
+        $query = $this->conn->prepare("DELETE FROM income WHERE income_id = :income_id");
+        $data = array(
+          ':income_id' => $_POST['income_id']
+          );
+        $query->execute($data);
+        $this->eksekusi = 1;
+        $this->message = "Data berhasil dihapus";
+      } catch (PDOException $e) {
+        $this->eksekusi = 0;
+        $this->message = "Data tidak bisa dihapus : ".$e->getMessage();
+      }
     }
   }
-}
 
 private function getIncomeData(){
   try {
@@ -371,7 +379,7 @@ private function updateIncomeData(){
       $this->eksekusi = 0;
     }
   }
-}
+ }
 
 private function bacaOutcome(){
   if (empty($_GET['outcome_date'])) {
@@ -533,7 +541,7 @@ private function bacaOutcome(){
             <td>".$data['outcome_date']."</td>
             <td>".$data['outcome_value']."</td>
             <td class='text-center'>
-              <button class='btn btn-default btn-sm'><i class='fa fa-fw fa-edit'></i>Edit</button>
+              <button class='btn btn-default btn-sm' onclick='getOutcomeData(".$data['outcome_id'].")'><i class='fa fa-fw fa-edit'></i>Edit</button>
               <button class='btn btn-danger btn-sm' onclick='delOutcome(".$data['outcome_id'].")'><i class='fa fa-fw fa-remove'></i>Delete</button>
             </td>
           </tr>
@@ -572,10 +580,43 @@ private function deleteOutcome(){
   }
 }
 private function getOutcomeData(){
+  try {
+    $query = $this->conn->prepare("SELECT * FROM outcome WHERE user_id = :user_id AND outcome_id = :outcome_id");
+    $query->bindParam(':user_id', $_SESSION['id']);
+    $query->bindParam(':outcome_id', $_POST['outcome_id']);
+    $query->execute();
+    
+    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+      $outcomeData = $row;
+    }
 
+    $this->updateData = $outcomeData;
+  } catch (PDOException $e) {
+    $this->message = "Kesalahan terjadi : ".$e->getMessage();
+  }
 }
 private function updateOutcomeData(){
+  if (empty($_POST['upOutID']) || empty($_POST['upOutFor']) || empty($_POST['upOutVal'])) {
+    $this->message = "Tidak boleh kosong!";
+  }else{
+    $outID = $_POST['upOutID'];
+    $outFor = $_POST['upOutFor'];
+    $outVal = $_POST['upOutVal'];
+    try {
+      $query = $this->conn->prepare("UPDATE outcome SET outcome_for = :outcome_for, outcome_value = :outcome_value WHERE user_id = :user_id AND outcome_id = :outcome_id");
+      $query->bindParam(':outcome_for', $outFor);
+      $query->bindParam(':outcome_value', $outVal);
+      $query->bindParam(':user_id', $_SESSION['id']);
+      $query->bindParam(':outcome_id', $outID);
 
+      $query->execute();
+      $this->message = "Data berhasil diupdate !";
+      $this->eksekusi = 1;
+    } catch (PDOException $e) {
+      $this->message = "Data gagal diupdate : ".$e->getMessage();
+      $this->eksekusi = 0;
+    }
+  }
 }
 
 /*
@@ -653,6 +694,12 @@ private function getLastDate($month){
     }elseif ($this->action == "readOutcome") {
       return $this->tableData;
     }elseif($this->action == "deleteOutcome"){
+      $response['message'] = $this->message;
+      $response['execute'] = $this->eksekusi;
+      return json_encode($response);
+    }elseif ($this->action == "getOutData") {
+      return json_encode($this->updateData);
+    }elseif ($this->action == "saveOutData") {
       $response['message'] = $this->message;
       $response['execute'] = $this->eksekusi;
       return json_encode($response);

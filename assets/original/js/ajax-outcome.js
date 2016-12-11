@@ -13,11 +13,13 @@ $("#addOutcome").click(function(){
 			alert(response.message);
 			$("#outUntuk").val("");
 			$("#outValue").val("");
-			loadOutcome(page);
+			if ($("#outShowDate").val() != "") {
+				loadOutcome(page);
+			}
+			$("#modal-addout").modal("hide");
 		}else{
 			alert(response.message);
 		}
-		$("#modal-addout").modal("hide");
 	});
 });
 
@@ -44,6 +46,42 @@ function delOutcome(id){
 			}
 		});
 	}
+}
+
+function getOutcomeData(id){
+	$.post("page/response.php",{
+		outcome_id: id,
+		getOutcomeData: 1
+	},function(data){
+		var outData = JSON.parse(data);
+		$("#idOut").val(outData.outcome_id);
+		$("#editForOut").val(outData.outcome_for);
+		$("#editValueOut").val(outData.outcome_value);
+		$("#modal-editout").modal("show");
+	});
+}
+
+function updateOutcomeData(){
+	var outcome_id = $("#idOut").val();
+	var outcome_for = $("#editForOut").val();
+	var outcome_value = $("#editValueOut").val();
+	var page = $("#disPage").text();
+
+	$.post("page/response.php",{
+		upOutID: outcome_id,
+		upOutFor: outcome_for,
+		upOutVal: outcome_value,
+		updateOut: 1
+	},function(data){
+		var response = JSON.parse(data);
+		if (response.execute == 1) {
+			alert(response.message);
+			$("#modal-editout").modal("hide");
+			loadOutcome(page);
+		}else{
+			alert(response.message);
+		}
+	});
 }
 
 function loadOutcome(page){
