@@ -1,7 +1,7 @@
 /*
  * Main Themes
  * by Me x Bootflat x Bootstrap
- * http://www.qbhcode.org/
+ * 
  */
 html,body{
   background-color: #F5F7FA;
@@ -155,4 +155,27 @@ table{
   font-size: 50px;
   padding: 5px;
   width: 
+}
+
+/* Settings */
+.profile-view-only{
+  margin-top: 3px;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+.miniButtonText{
+  font-size: 13px;
+  margin-left: 10px;
+}
+.miniButtonText:hover{
+  text-decoration: underline;
+}
+.page-title{
+  margin-top: 0px; 
+}
+.user-details{
+  background-color: white;
+  border: 1px solid #E6E9ED;
+  border-radius: 5px;
+  padding: 20px;
 }

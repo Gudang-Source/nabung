@@ -11,7 +11,12 @@
       </section>
       <!-- content box (User data) -->
       <section class="content-box">
-
+        <div class="row">
+          <div class="col-xs-12">
+            <h3 class="page-title">Pengeluaran</h3>
+            <hr>
+          </div>
+        </div>
         <!-- Input Bulan -->
         <div class="row">
           <div class="col-md-10">
