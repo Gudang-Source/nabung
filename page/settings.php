@@ -23,11 +23,10 @@
           </div>
           <div class="col-md-9 col-xs-12 user-details">
             <div class="form-group">
-              <label for="fullname" class="control-label">Nama Lengkap :</label>
-              <p class="profile-view-only" id="fullnameView">Muhammad Faishal<a class="miniButtonText" id="editFullname">Edit</a></p>
-              <div id="form-fullname" style="display: none;">
-                <div class="form-group"><input type="text" style="max-width: 50%;" class="form-control" placeholder="Nama Lengkap"></div>
-                <button class="btn btn-primary btn-sm" id="saveEditFullname">Simpan</button>
+              <label for="fullname" class="control-label">Nama Lengkap :</label><a class="miniButtonText" id="editFullname">Edit</a><a class='miniButtonText' id='saveEditFullname' onclick='saveName()' style="display: none;">Simpan</a>
+              <p class="profile-view-only" id="fullname-setting"></p>
+              <div id='form-fullname' style="display: none;">
+                <div class='form-group'><input type='text' style='max-width: 50%;' id="fullname-input" class='form-control' placeholder='Nama Lengkap'></div>
               </div>
             </div>
             <div class="form-group">
@@ -45,7 +44,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="goalInput" class="control-label">Goal :</label><a class="miniButtonText" id="editGoal">Edit</a><a class="miniButtonText" id="saveGoal" style="display: none;">Simpan</a>
+              <label for="goalInput" class="control-label">Goal :</label><a class="miniButtonText" id="editGoal">Edit</a>
               <input type="number" class="form-control" id="goalInput" readonly>
             </div>
           </div>
