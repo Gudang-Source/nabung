@@ -1,7 +1,15 @@
+<?php
+$database = new Koneksi();
+$koneksi = $database->dapetKoneksi();
+$login = new Login($koneksi);
+?>
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
           <div class="login-form">
+            <div id="log-status">
+              <?php echo $login->message ;?>
+            </div>
             <form method="POST">
                 <div class="form-group">
                   <input type="text" name="username" class="form-control" placeholder="Username">

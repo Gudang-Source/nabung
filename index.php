@@ -58,5 +58,6 @@ $halamannya->setPage();
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="assets/original/js/ajax-income.js"></script>
     <script type="text/javascript" src="assets/original/js/ajax-outcome.js"></script>
+    <script type="text/javascript" src="assets/original/js/settings.js"></script>
   </body>
 </html>

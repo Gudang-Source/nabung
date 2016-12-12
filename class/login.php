@@ -2,12 +2,12 @@
 class Login{
   private $conn = null;
 
-  private $message;
+  public $message = "";
 
   public function __construct($koneksi){
     $this->conn = $koneksi;
 
-    if (empty($_SESSION['status'])) {
+    if (session_id() == null) {
       session_start();
     }
 
@@ -41,17 +41,16 @@ class Login{
 
         header('location:?p=dashboard');
       }else{
-        $this->message = "Username / Password salah";
+        $this->message = "<div class='alert alert-warning alert-dismissable'><button class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><i class='fa fa-fw fa-warning'></i>&nbsp;Username / Password salah</div>";
       }
     }else{
-      $this->message = "User tidak ditemukan";
+      $this->message = "<div class='alert alert-warning alert-dismissable'><button class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><i class='fa fa-fw fa-warning'></i>&nbsp;Username tidak ditemukan</div>";
     }
-    echo $this->message;
   }
 
   private function Register(){
     if (empty($_POST['regusername']) || empty($_POST['regpassword'])) {
-      $this->message = "Username dan Password harus terisi!";
+      $this->message = "<div class='alert alert-warning alert-dismissable'><button class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><i class='fa fa-fw fa-warning'></i>&nbsp;Tidak boleh kosong!</div>";
     }else{
       $username = $_POST['regusername'];
       $password = password_hash($_POST['regpassword'], PASSWORD_DEFAULT);
@@ -63,7 +62,7 @@ class Login{
         $query->execute();
 
         if ($query->rowCount() > 0) {
-          $this->message = "Username sudah terpakai";
+          $this->message = "<div class='alert alert-warning alert-dismissable'><button class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><i class='fa fa-fw fa-warning'></i>&nbsp;Username sudah terpakai</div>";
         }else{
           $addUser = $this->conn->prepare("INSERT INTO user(username, password, fullname) VALUES(:username, :password, :fullname)");
           $addUser->bindParam(':username', $username);
@@ -77,7 +76,6 @@ class Login{
         $this->message = "Terjadi kesalahan : ".$e->getMessage();
       }
     }
-    echo $this->message;
   }
 
   public function sessionCheck(){
