@@ -53,31 +53,31 @@ class User{
 		}elseif ($act == "getUserData") {
 			$this->getUserData();
 		}elseif ($act == "changePassword") {
-			if (empty($_GET['oldPassword'])) {
+			if (empty($_POST['oldPassword'])) {
 				$oldPassword = null;
 			}else{
-				$oldPassword = $_GET['oldPassword'];
+				$oldPassword = $_POST['oldPassword'];
 			}
 
-			if (empty($_GET['newPassword'])) {
+			if (empty($_POST['newPassword'])) {
 				$newPassword = null;
 			}else{
-				$newPassword = $_GET['newPassword'];
+				$newPassword = $_POST['newPassword'];
 			}
 
-			if (empty($_GET['retryPassword'])) {
+			if (empty($_POST['retryPassword'])) {
 				$retryPassword = null;
 			}else{
-				$retryPassword = $_GET['retryPassword'];
+				$retryPassword = $_POST['retryPassword'];
 			}
 			$user_id = $this->user_id;
 
 			$this->changePassword($user_id, $oldPassword, $newPassword, $retryPassword);
 		}elseif ($act == "changeGoal"){
-			if (empty($_GET['goal'])) {
+			if (empty($_POST['goal'])) {
 				$goal = null;
 			}else{
-				$goal = $_GET['goal'];
+				$goal = $_POST['goal'];
 			}
 			$user_id = $this->user_id;
 
@@ -118,9 +118,11 @@ class User{
 	private function changePassword($id, $oldPassword, $newPassword, $retryPassword){
 		if (empty($id) || empty($oldPassword) || empty($newPassword) || empty($retryPassword)) {
 			$this->message = "Data tidak boleh kosong!";
+			$this->status = 0;
 		}else{
 			if (strcmp($newPassword, $retryPassword) !== 0) {
 				$this->message = "Password baru tidak sama";
+				$this->status = 0;
 			}else{
 				try {
 					$query = $this->conn->prepare("SELECT user.password FROM user WHERE user_id = :user_id");
@@ -136,11 +138,14 @@ class User{
 						$change->execute();
 
 						$this->message = "Berhasil mengubah password";
+						$this->status = 1;
 					}else{
 						$this->message = "Password lama anda salah";
+						$this->status = 0;
 					}
 				} catch (PDOException $e) {
 					$this->message = "Terjadi kesalahan : ".$e->getMessage();
+					$this->status = 0;
 				}
 			}
 		}
@@ -149,6 +154,7 @@ class User{
 	private function changeGoal($id, $goal){
 		if (empty($id) || empty($goal)) {
 			$this->message = "Data tidak boleh kosong!";
+			$this->status = 0;
 		}else{
 			try {
 				$query = $this->conn->prepare("UPDATE user SET goal = :goal WHERE user_id = :user_id");
@@ -157,8 +163,10 @@ class User{
 				$query->execute();
 
 				$this->message = "Berhasil mengubah goal!";
+				$this->status = 1;
 			} catch (PDOException $e) {
 				$this->message = "Terjadi kesalahan : ".$e->getMessage();
+				$this->status = 0;
 			}
 		}
 	}
