@@ -159,8 +159,6 @@ table{
 
 /* Settings */
 .profile-view-only{
-  margin-top: 3px;
-  margin-bottom: 5px;
   font-size: 15px;
 }
 .miniButtonText{
@@ -169,6 +167,7 @@ table{
 }
 .miniButtonText:hover{
   text-decoration: underline;
+  cursor: pointer;
 }
 .page-title{
   margin-top: 0px; 

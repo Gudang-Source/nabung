@@ -18,25 +18,35 @@
         </div>
         <div class="row">
           <div class="col-md-3 col-xs-12 text-center" style="margin-bottom:20px;">
-            <img src="aa.jpg" style="width: 128px; height: 128px;" class="img img-thumbnail">
+            <img src="upload/user1.jpg" style="width: 160px; height: 160px;" class="img img-thumbnail">
             <button class="btn btn-link btn-block"><i class="fa fa-fw fa-edit"></i>&nbsp;Ganti foto</button>
           </div>
           <div class="col-md-9 col-xs-12 user-details">
             <div class="form-group">
               <label for="fullname" class="control-label">Nama Lengkap :</label>
-              <p class="profile-view-only">Muhammad Faishal<a class="miniButtonText" href="#">Edit</a></p>
+              <p class="profile-view-only" id="fullnameView">Muhammad Faishal<a class="miniButtonText" id="editFullname">Edit</a></p>
+              <div id="form-fullname" style="display: none;">
+                <div class="form-group"><input type="text" style="max-width: 50%;" class="form-control" placeholder="Nama Lengkap"></div>
+                <button class="btn btn-primary btn-sm" id="saveEditFullname">Simpan</button>
+              </div>
             </div>
             <div class="form-group">
               <label for="username" class="control-label">Username :</label>
-              <p class="profile-view-only">admin<a class="miniButtonText" href="#">Edit</a></p>
+              <p class="profile-view-only">admin</p>
             </div>
             <div class="form-group">
               <label for="password" class="control-label">Password :</label>
-              <p class="profile-view-only">Some hashed text<a class="miniButtonText" href="#">Edit</a></p>
+              <p class="profile-view-only" id="passwordView">Some hashed text<a class="miniButtonText" id="editPassword">Edit</a></p>
+              <div id="form-password" style="display: none;">
+                <div class="form-group"><input type="password" style="max-width: 50%;" class="form-control" placeholder="Password Lama" name=""></div>
+                <div class="form-group"><input type="password" style="max-width: 50%;" class="form-control" placeholder="Password Baru" name=""></div>
+                <div class="form-group"><input type="password" style="max-width: 50%;" class="form-control" placeholder="Ulangi Password"></div>
+                <button class="btn btn-primary btn-sm" id="saveEditPassword">Simpan</button>
+              </div>
             </div>
             <div class="form-group">
-              <label for="password" class="control-label">Goal :</label><a class="miniButtonText" href="#">Edit</a>
-              <input type="number" class="form-control" readonly>
+              <label for="goalInput" class="control-label">Goal :</label><a class="miniButtonText" id="editGoal">Edit</a><a class="miniButtonText" id="saveGoal" style="display: none;">Simpan</a>
+              <input type="number" class="form-control" id="goalInput" readonly>
             </div>
           </div>
         </div>
