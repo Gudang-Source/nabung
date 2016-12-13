@@ -18,8 +18,9 @@
         </div>
         <div class="row">
           <div class="col-md-3 col-xs-12 text-center" style="margin-bottom:20px;">
-            <img src="upload/user1.jpg" style="width: 160px; height: 160px;" class="img img-thumbnail">
+            <img src="upload/user1.png" style="width: 160px; height: 160px;" class="img img-thumbnail">
             <button class="btn btn-link btn-block"><i class="fa fa-fw fa-edit"></i>&nbsp;Ganti foto</button>
+            <div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 89%;">89%</div></div>
           </div>
           <div class="col-md-9 col-xs-12 user-details">
             <div class="form-group">
