@@ -1,98 +1,97 @@
 <?php
 class Transaksi{
-  private $conn = null;
+   private $conn = null;
 
-  private $tableData;
-  private $updateData;
+   private $tableData;
+   private $updateData;
 
-  private $auth;
+   private $auth;
   
-  private $message;
-  private $eksekusi;
-  private $action;
+   private $message;
+   private $eksekusi;
+   private $action;
 
-  public function __construct($connectionStatus,$sessionStatus){
-    if ($sessionStatus == TRUE) {
-      $this->conn = $connectionStatus;
-      $this->auth = 1;
+   public function __construct($connectionStatus,$sessionStatus){
+      if ($sessionStatus == TRUE) {
+         $this->conn = $connectionStatus;
+         $this->auth = 1;
 
-      //Income Request
-      if (isset($_GET['readInc'])) {
-        $this->action = "readIncome";
-        $this->bacaIncome();
-      }
-      if (isset($_POST['addInc'])) {
-        $this->action = "addIncome";
-        $this->tambahIncome();
-      }
-      if (isset($_POST['delInc'])) {
-        $this->action = "deleteIncome";
-        $this->hapusIncome();
-      }
-      if (isset($_POST['getIncomeData'])) {
-        $this->action = "getTheData";
-        $this->getIncomeData();
-      }
-      if (isset($_POST['updateInc'])){
-        $this->action = "saveTheData";
-        $this->updateIncomeData();
-      }
+         //Income Request
+         if (isset($_GET['readInc'])) {
+           $this->action = "readIncome";
+           $this->bacaIncome();
+         }
+         if (isset($_POST['addInc'])) {
+           $this->action = "addIncome";
+           $this->tambahIncome();
+         }
+         if (isset($_POST['delInc'])) {
+           $this->action = "deleteIncome";
+           $this->hapusIncome();
+         }
+         if (isset($_POST['getIncomeData'])) {
+           $this->action = "getTheData";
+           $this->getIncomeData();
+         }
+         if (isset($_POST['updateInc'])){
+           $this->action = "saveTheData";
+           $this->updateIncomeData();
+         }
 
-      //Outcome Request
-      if(isset($_POST['addOut'])){
-        $this->action = "addOutcome";
-        $this->tambahOutcome();
+         //Outcome Request
+         if(isset($_POST['addOut'])){
+           $this->action = "addOutcome";
+           $this->tambahOutcome();
+         }
+         if (isset($_GET['readOut'])) {
+           $this->action = "readOutcome";
+           $this->bacaOutcome();
+         }
+         if (isset($_POST['delOut'])) {
+           $this->action = "deleteOutcome";
+           $this->deleteOutcome();
+         }
+         if (isset($_POST['getOutcomeData'])) {
+           $this->action = "getOutData";
+           $this->getOutcomeData();
+         }
+         if (isset($_POST['updateOut'])) {
+           $this->action = "saveOutData";
+           $this->updateOutcomeData();
+         }
+      }else{
+         $this->auth = 0;
       }
-      if (isset($_GET['readOut'])) {
-        $this->action = "readOutcome";
-        $this->bacaOutcome();
-      }
-      if (isset($_POST['delOut'])) {
-        $this->action = "deleteOutcome";
-        $this->deleteOutcome();
-      }
-      if (isset($_POST['getOutcomeData'])) {
-        $this->action = "getOutData";
-        $this->getOutcomeData();
-      }
-      if (isset($_POST['updateOut'])) {
-        $this->action = "saveOutData";
-        $this->updateOutcomeData();
-      }
-
-    }else{
-      $this->auth = 0;
-    }
-  }
+   }
 
 /*
-  =======================
-    Income Method
-  =======================
+   =======================
+      Income Method
+   =======================
 */
 
-  private function tambahIncome(){
-    if (empty($_POST['income_from']) || empty($_POST['income_value'])) {
-      $this->eksekusi = 0;
-      $this->message = "Data tidak boleh kosong!";
-    }else{
-      try {
-        $query = $this->conn->prepare("INSERT INTO income(income_from,income_date,income_value,user_id) VALUES(:income_from,:income_date,:income_value,:user_id)");
-        $data = array(
-          ':income_from' => $_POST['income_from'],
-          ':income_date' => date("Y-m-d"),
-          ':income_value' => $_POST['income_value'],
-          ':user_id' => $_SESSION['id']
-          );
-        $query->execute($data);
-        $this->eksekusi = 1;
-        $this->message = "Data berhasil disimpan";
-      } catch (PDOException $e) {
-        $this->eksekusi = 0;
-        $this->message = "Terjadi kesalahan saat menyimpan data. ".$e->getMessage();
+   private function tambahIncome(){
+      if (empty($_POST['income_from']) || empty($_POST['income_value'])) {
+         $this->eksekusi = 0;
+         $this->message = "Data tidak boleh kosong!";
+      }else{
+         try {
+            $query = $this->conn->prepare("INSERT INTO income(income_from,income_date,income_value,user_id) VALUES(:income_from,:income_date,:income_value,:user_id)");
+            $data = array(
+              ':income_from' => $_POST['income_from'],
+              ':income_date' => date("Y-m-d"),
+              ':income_value' => $_POST['income_value'],
+              ':user_id' => $_SESSION['id']
+              );
+            $query->execute($data);
+            $this->eksekusi = 1;
+            $this->message = "Data berhasil disimpan";
+         } catch (PDOException $e) {
+            $this->eksekusi = 0;
+            $this->message = "Terjadi kesalahan saat menyimpan data. ".$e->getMessage();
+         }
       }
-    }
-  }
+   }
 
   private function bacaIncome(){
   	if (empty($_GET['income_date'])){
@@ -624,8 +623,8 @@ private function updateOutcomeData(){
   Other Method
  ========================
 */
- private function getFirstDate($month){
-  $getDate = explode('-', $month);
+private function getFirstDate($month){
+   $getDate = explode('-', $month);
   $tahun = $getDate['0'];
   $bulan = $getDate['1'];
   $jumlahTanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
