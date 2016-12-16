@@ -18,11 +18,11 @@
         </div>
         <div class="row">
           <div class="col-md-3 col-xs-12 text-center" style="margin-bottom:20px;">
-            <img src="upload/user1.png" style="width: 160px; height: 160px;" class="img img-thumbnail">
+            <img id="userimage" src="" style="width: 160px; height: 160px;" class="img img-thumbnail">
             <div id="bungkus" class="progress" style="margin: 8px auto; width:70%; height: 10px; display: none;"><div id="upload-progress" class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">89%</span></div></div>
             <form id="form-upimage" enctype="multipart/form-data">
-              <input type="file" name="picturep" id="picturep" style="margin:12px auto; width: 200px;">
-              <button type="button" class="btn btn-primary btn-sm" onclick="uploadPict()">Upload</button>
+              <input type="file" name="picture" id="filenya" style="margin:12px auto; width: 200px;">
+              <button type="submit" class="btn btn-primary btn-sm">Upload</button>
             </form>
           </div>
           <div class="col-md-9 col-xs-12 user-details">

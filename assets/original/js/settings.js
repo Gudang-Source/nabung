@@ -79,8 +79,26 @@ function loadData(){
 		$("#fullname-input").val(userdata.name);
 		$("#username-setting").text(userdata.username);
 		$("#goalInput").val(userdata.goal);
+		$("#userimage").attr('src', userdata.profilePict);
 	});
 }
+
+$("#form-upimage").on('submit', function(e) {
+	e.preventDefault();
+	var data = new FormData(this);
+	$.ajax({
+		type: 'POST',
+		url: 'page/rsettings.php?act=changePict',
+		data: data,
+		contentType: false,
+		processData:false
+
+	}).success(function(data) {
+		var response = JSON.parse(data);
+		alert(response.message);
+		loadData();
+	});
+});
 
 $(document).ready(function(){
 	//Tombol Edit Nama

@@ -82,6 +82,19 @@ class User{
 			$user_id = $this->user_id;
 
 			$this->changeGoal($user_id, $goal);
+		}elseif ($act == "changePict") {
+			if (empty($_FILES['picture']['name'])) {
+				$picture = null;
+				$picture_tmp = null;
+				$picture_size = null;
+			}else{
+				$picture = $_FILES['picture']['name'];
+				$picture_tmp = $_FILES['picture']['tmp_name'];
+				$picture_size = $_FILES['picture']['size'];
+			}
+			$user_id = $this->user_id;
+
+			$this->changePicture($user_id, $picture, $picture_tmp, $picture_size);
 		}
 	}
 
@@ -166,6 +179,36 @@ class User{
 				$this->status = 1;
 			} catch (PDOException $e) {
 				$this->message = "Terjadi kesalahan : ".$e->getMessage();
+				$this->status = 0;
+			}
+		}
+	}
+
+	private function changePicture($id, $picture, $picture_tmp, $picture_size){
+		if (empty($id) || empty($picture)) {
+			$this->message = "Data tidak boleh kosong";
+			$this->status = 0;
+		}else{
+			if (!file_exists("../upload/$this->username/")) {
+				mkdir("../upload/$this->username/");
+			}
+			$uploadto = "../upload/$this->username/".basename($picture);
+			$uploaddir = "upload/$this->username/".basename($picture);
+			if (move_uploaded_file($picture_tmp, $uploadto)) {
+				try {
+					$query = $this->conn->prepare("UPDATE user SET pict = :upload WHERE user_id = :user_id");
+					$query->bindParam(':upload', $uploaddir);
+					$query->bindParam(':user_id', $id);
+					$query->execute();
+
+					$this->message = "Sukses Mengganti Pict!";
+					$this->status = 0;
+				} catch (PDOException $e) {
+					$this->message = "Kesalahan terjadi : ".$e->getMessage();
+					$this->status = 0;
+				}
+			}else{
+				$this->message = "Gagal mengganti";
 				$this->status = 0;
 			}
 		}
