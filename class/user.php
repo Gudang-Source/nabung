@@ -192,8 +192,12 @@ class User{
 			if (!file_exists("../upload/$this->username/")) {
 				mkdir("../upload/$this->username/");
 			}
-			$uploadto = "../upload/$this->username/".basename($picture);
-			$uploaddir = "upload/$this->username/".basename($picture);
+			$file_ext = explode(".", basename($picture));
+			$file_index_ext = count($file_ext) - 1;
+			$file_get_ext = $file_ext[$file_index_ext];
+
+			$uploadto = "../upload/$this->username/default.".$file_get_ext;
+			$uploaddir = "upload/$this->username/default.".$file_get_ext;
 			if (move_uploaded_file($picture_tmp, $uploadto)) {
 				try {
 					$query = $this->conn->prepare("UPDATE user SET pict = :upload WHERE user_id = :user_id");
@@ -202,7 +206,7 @@ class User{
 					$query->execute();
 
 					$this->message = "Sukses Mengganti Pict!";
-					$this->status = 0;
+					$this->status = 1;
 				} catch (PDOException $e) {
 					$this->message = "Kesalahan terjadi : ".$e->getMessage();
 					$this->status = 0;

@@ -95,8 +95,13 @@ $("#form-upimage").on('submit', function(e) {
 
 	}).success(function(data) {
 		var response = JSON.parse(data);
-		alert(response.message);
-		loadData();
+		if (response.status == 1) {
+			alert(response.message);
+			loadData();
+		}else{
+			alert(response.message);
+		}
+		
 	});
 });
 
