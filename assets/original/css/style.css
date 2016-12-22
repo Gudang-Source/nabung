@@ -137,6 +137,17 @@ table{
 }
 .colAct{
   width: 20%;
+  text-align: center;
+}
+
+.colBarang{
+  width: 20%;
+}
+.colProgress{
+  width: 30%;
+}
+.colHarga{
+  width: 25%;
 }
 
 /* Keterangan */
