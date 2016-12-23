@@ -21,7 +21,7 @@
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Pencarian">
+                <input type="text" id="searchText" class="form-control" placeholder="Pencarian" onkeyup="loadDataWS()">
               </div>
             </div>
           </div>
@@ -33,64 +33,7 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <table class="table table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th class="colNo">No</th>
-                  <th class="colBarang">Barang</th>
-                  <th class="colProgress">Progress</th>
-                  <th class="colHarga">Harga</th>
-                  <th class="colAct">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-center">1.</td>
-                  <td>Mouse</td>
-                  <td class="text-center">
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;">60%</div>
-                    </div>
-                  </td>
-                  <td>Rp. 10.000</td>
-                  <td class="text-center">
-                    <button class="btn btn-sm btn-primary" disabled>Beli</button>
-                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#edit-barang">Ubah</button>
-                    <button class="btn btn-sm btn-danger">Hapus</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">2.</td>
-                  <td>Komputer</td>
-                  <td>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:30%;">30%</div>
-                    </div>
-                  </td>
-                  <td>Rp. 10.000</td>
-                  <td class="text-center">
-                    <button class="btn btn-sm btn-primary" disabled>Beli</button>
-                    <button class="btn btn-sm btn-success">Ubah</button>
-                    <button class="btn btn-sm btn-danger">Hapus</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">3.</td>
-                  <td>Bolpoin</td>
-                  <td>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">Complete</div>
-                    </div>
-                  </td>
-                  <td>Rp. 10.000</td>
-                  <td class="text-center">
-                    <button class="btn btn-sm btn-primary">Beli</button>
-                    <button class="btn btn-sm btn-success">Ubah</button>
-                    <button class="btn btn-sm btn-danger">Hapus</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div id="data-wishlist"></div>
           </div>
         </div>
       </section>
