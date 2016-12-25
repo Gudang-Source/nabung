@@ -79,7 +79,7 @@
 				}else{
 					$idBrg = $_POST['idBrg'];
 				}
-				$this->delData($userdata['userid'], $idBrg);
+				$this->delData($this->userdata['userid'], $idBrg);
 			}else{
 				$this->response['message'] = "Perintah tidak dikenal ";
 				$this->response['status'] = 0;
@@ -101,6 +101,26 @@
 					$this->response['message'] = "Data berhasil disimpan!";
 					$this->response['status'] = 1;
 				}catch(PDOException $e){
+					$this->response['message'] = "Terjadi kesalahan : ".$e->getMessage();
+					$this->response['status'] = 0;
+				}
+			}
+		}
+
+		private function delData($id, $idBarang){
+			if (empty($idBarang)) {
+				$this->response['message'] = "Barang tidak dipilih";
+				$this->response['status'] = 0;
+			}else{
+				try {
+					$query = $this->conn->prepare("DELETE FROM wishlist WHERE id_barang = :id_barang AND user_id = :user_id");
+					$query->bindParam(':id_barang', $idBarang);
+					$query->bindParam(':user_id', $id);
+					$query->execute();
+
+					$this->response['message'] = "Data berhasil dihapus!";
+					$this->response['status'] = 1;
+				}catch(PDOException $e) {
 					$this->response['message'] = "Terjadi kesalahan : ".$e->getMessage();
 					$this->response['status'] = 0;
 				}
@@ -156,7 +176,7 @@
 			try {
 				//Paginasi
 				$batas_data = 10;
-				if (empty($halaman)) {
+				if (empty($halaman) || $halaman < 1) {
 					$halaman_ini = 1;
 				}else{
 					$halaman_ini = $halaman;
@@ -283,7 +303,7 @@
 							<td>
 								<button class='btn btn-sm btn-primary ".btnState(persentase($ws['nominal_barang'], $this->userdata['saldo']))."'>Beli</button>
 	                    		<button class='btn btn-sm btn-success' data-toggle='modal' data-target='#edit-barang'>Ubah</button>
-								<button class='btn btn-sm btn-danger'>Hapus</button>
+								<button class='btn btn-sm btn-danger' onclick='delDataWS(".$ws['id_barang'].")'>Hapus</button>
 							</td>
 						</tr>";
 					}

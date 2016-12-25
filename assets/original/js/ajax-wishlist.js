@@ -18,6 +18,30 @@ function insertDataWS(){
 	});
 }
 
+function delDataWS(id){
+	var halini = $("#halini").text();
+	var sumhalini = $("#sumhalini").text();
+	var conf = confirm("Apakah anda yakin ingin menghapus?");
+
+	if (conf == true) {
+		$.post("page/wsresponse.php?act=delData",{
+			idBrg: id
+		}, function(data){
+			var response = JSON.parse(data);
+			if (response.status = 1) {
+				alert(response.message);
+				if (sumhalini == 1) {
+					loadDataWS(parseInt(halini) - 1);
+				}else{
+					loadDataWS(halini);
+				}
+			}else{	
+				alert(response.message);
+			}
+		});
+	}
+}
+
 function loadDataWS(page){
 	var search2Text = $("#searchText").val();
 	if (search2Text.length == 0) {
