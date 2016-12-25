@@ -106,5 +106,20 @@
       }
       return $this->activePage;
     }
+
+    public function setLibrary(){
+      if ($this->page == "income") {
+        $library = "<script type='text/javascript' src='assets/original/js/ajax-income.js'></script>";
+      }elseif ($this->page == "outcome") {
+        $library = "<script type='text/javascript' src='assets/original/js/ajax-outcome.js'></script>";
+      }elseif ($this->page == "wishlist") {
+        $library = "<script type='text/javascript' src='assets/original/js/ajax-wishlist.js'></script>";
+      }elseif ($this->page == "settings") {
+        $library = "<script type='text/javascript' src='assets/original/js/settings.js'></script>";
+      }else{
+        $library = "<!-- No Library Loaded -->";
+      }
+      return $library;
+    }
   }
 ?>
