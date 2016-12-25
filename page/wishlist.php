@@ -75,16 +75,17 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="namabarang">Nama Barang</label>
-              <input id="namabarang" type="text" class="form-control" placeholder="Nama Barang">
+              <input id="edit-namabarang" type="text" class="form-control" placeholder="Nama Barang">
             </div>
             <div class="form-group">
               <label for="namabarang">Nominal Harga</label>
-              <input id="namabarang" type="text" class="form-control" placeholder="Harga Barang">
+              <input id="edit-nominalbarang" type="text" class="form-control" placeholder="Harga Barang">
             </div>
           </div>
+          <input type="hidden" class="hidden" id="id-brg">
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Ubah</button>
+            <button type="button" class="btn btn-primary" onclick="updateData()">Ubah</button>
           </div>
         </div>
       </div>

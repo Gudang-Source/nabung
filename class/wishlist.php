@@ -2,7 +2,7 @@
 	class Wishlist{
 		public $userdata = array('userid','saldo');
 		private $conn = null;
-		private $response = array('status','message');
+		private $response = array();
 		private $data;
 
 		public function __construct($koneksi, $sesi, $userID){
@@ -72,7 +72,12 @@
 				}else{
 					$nominalBrg = $_POST['nominalBrg'];
 				}
-				$this->editData($this->userdata['userid'], $namaBrg, $nominalBrg);	
+				if (empty($_POST['idBarang'])) {
+					$idBarang = null;
+				}else{
+					$idBarang = $_POST['idBarang'];
+				}
+				$this->editData($this->userdata['userid'], $idBarang, $namaBrg, $nominalBrg);	
 			}elseif($act == "delData"){
 				if (empty($_POST['idBrg'])) {
 					$idBrg = null;
@@ -80,6 +85,13 @@
 					$idBrg = $_POST['idBrg'];
 				}
 				$this->delData($this->userdata['userid'], $idBrg);
+			}elseif($act == "fetchData"){
+				if (empty($_GET['idBrg'])) {
+					$idBarang = null;
+				}else{
+					$idBarang = $_GET['idBrg'];
+				}
+				$this->fetchData($this->userdata['userid'], $idBarang);
 			}else{
 				$this->response['message'] = "Perintah tidak dikenal ";
 				$this->response['status'] = 0;
@@ -127,6 +139,49 @@
 			}
 		}
 
+		private function editData($id, $idBarang, $namaBarang, $nominalBarang){
+			if (empty($namaBarang) || empty($nominalBarang)) {
+				$this->response['message'] = "Data tidak boleh kosong";
+				$this->response['status'] = 0;
+			}else{
+				try {
+					$query = $this->conn->prepare("UPDATE wishlist SET nama_barang = :nama_barang, nominal_barang = :nominal_barang WHERE id_barang = :id_barang AND user_id = :user_id");
+					$query->bindParam(':nama_barang', $namaBarang);
+					$query->bindParam(':nominal_barang', $nominalBarang);
+					$query->bindParam(':id_barang', $idBarang);
+					$query->bindParam(':user_id', $id);
+					$query->execute();
+
+					$this->response['message'] = "Data berhasil tersimpan";
+					$this->response['status'] = 1;
+				}catch(PDOException $e) {
+					$this->response['message'] = "Terjadi kesalahan : ".$e->getMessage();
+					$this->response['status'] = 0;
+				}
+			}
+		}
+
+		private function fetchData($id, $idBarang){
+			if (empty($idBarang)) {
+				$this->response['message'] = "Data tidak boleh kosong";
+				$this->response['status'] = 0;
+			}else{
+				try {
+					$query = $this->conn->prepare("SELECT * FROM wishlist WHERE id_barang = :id_barang AND user_id = :user_id");
+					$query->bindParam(':id_barang', $idBarang);
+					$query->bindParam(':user_id', $id);
+					$query->execute();
+
+					while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+						$this->response = $row;
+					}
+				}catch(PDOException $e) {
+					$this->response['message'] = "Terjadi kesalahan : ".$e->getMessage();
+					$this->response['status'] = 0;
+				}
+			}
+		}
+
 		private function getData($id, $searchText, $halaman){
 			//Fungsi persentasi
 			function persentase($harga, $saldo){
@@ -158,6 +213,8 @@
 			function barStatus($persen){
 				if ($persen == 100) {
 					$status = "Complete";
+				}elseif($persen == 0){
+					$status = "";
 				}else{
 					$status = $persen."%";
 				}
@@ -302,7 +359,7 @@
 							<td>".$ws['nominal_barang']."</td>
 							<td>
 								<button class='btn btn-sm btn-primary ".btnState(persentase($ws['nominal_barang'], $this->userdata['saldo']))."'>Beli</button>
-	                    		<button class='btn btn-sm btn-success' data-toggle='modal' data-target='#edit-barang'>Ubah</button>
+	                    		<button class='btn btn-sm btn-success' onclick='fetchData(".$ws['id_barang'].")'>Ubah</button>
 								<button class='btn btn-sm btn-danger' onclick='delDataWS(".$ws['id_barang'].")'>Hapus</button>
 							</td>
 						</tr>";
@@ -324,13 +381,11 @@
 		}
 
 		public function Response(){
-			if (empty($this->response['message']) && empty($this->response['status'])) {
+			if (empty($this->response)) {
 				$response = $this->data;
 				return $response;
 			}else{
-				$response['message'] = $this->response['message'];
-				$response['status'] = $this->response['status'];
-				return json_encode($response);
+				return json_encode($this->response);
 			}
 		}
 	}
