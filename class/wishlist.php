@@ -43,7 +43,12 @@
 				}else{
 					$searchText = "%{$_GET['searchText']}%";
 				}
-				$this->getData($this->userdata['userid'], $searchText);
+				if (empty($_GET['page'])) {
+					$dispage = null;
+				}else{
+					$dispage = $_GET['page'];
+				}
+				$this->getData($this->userdata['userid'], $searchText, $dispage);
 			}elseif($act == "addData"){
 				if (empty($_POST['namaBrg'])) {
 					$namaBrg = null;
@@ -81,7 +86,7 @@
 			}
 		}
 
-		private function getData($id, $searchText){
+		private function getData($id, $searchText, $halaman){
 			//Fungsi persentasi
 			function persentase($harga, $saldo){
 				$persentase = ceil(($saldo/$harga)* 100);
@@ -128,25 +133,109 @@
 			}
 
 			try {
+				//Paginasi
+				$batas_data = 10;
+				if (empty($halaman)) {
+					$halaman_ini = 1;
+				}else{
+					$halaman_ini = $halaman;
+				}
+				$posisi = (($halaman_ini - 1)* $batas_data);
+
 				if (empty($searchText)) {
 					$query = $this->conn->prepare("SELECT * FROM wishlist WHERE user_id = :user_id ORDER BY user_id ASC");
 					$query->bindParam(':user_id', $id);
 					$query->execute();
+
+					//Limited Query
+					$lquery = $this->conn->prepare("SELECT * FROM wishlist WHERE user_id = :user_id ORDER BY user_id ASC LIMIT :posisi, :batas_data");
+					$lquery->bindParam(':user_id', $id);
+					$lquery->bindParam(':posisi', $posisi, PDO::PARAM_INT);
+					$lquery->bindParam(':batas_data', $batas_data, PDO::PARAM_INT);
+					$lquery->execute();
 				}else{
 					$query = $this->conn->prepare("SELECT * FROM wishlist WHERE user_id = :user_id AND (nama_barang LIKE :searchText OR nominal_barang LIKE :searchText) ORDER BY user_id ASC");
 					$query->bindParam(':user_id', $id);
 					$query->bindParam(':searchText', $searchText);
 					$query->execute();
+
+					//Limited Query
+					$lquery = $this->conn->prepare("SELECT * FROM wishlist WHERE user_id = :user_id AND (nama_barang LIKE :searchText OR nominal_barang LIKE :searchText) ORDER BY user_id ASC LIMIT :posisi, :batas_data");
+					$lquery->bindParam(':user_id', $id);
+					$lquery->bindParam(':searchText', $searchText);
+					$lquery->bindParam(':posisi', $posisi, PDO::PARAM_INT);
+					$lquery->bindParam(':batas_data', $batas_data, PDO::PARAM_INT);
+					$lquery->execute();
 				}
 
-				while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+				//Config Paginasi
+				$countNow = $lquery->rowCount();
+				$countAll = $query->rowCount();
+				$countPage = ceil($countAll / $batas_data);
+
+
+				while ($row = $lquery->fetch(PDO::FETCH_ASSOC)) {
 					$data[] = $row;
 				}
 
 				if (empty($data)) {
 					$table = "<div class='alert alert-warning'><p class='text-center'><i class='fa fa-fw fa-warning'></i>&nbsp;Tidak ditemukan</p></div>";
 				}else{
-					$table = "<table class='table table-bordered table-hover'>";
+
+					//View Paginasi
+					$table = "<div class='text-left'>";
+					$table .= "<ul class='pagination'>";
+					if ($halaman_ini < 2) {
+						$table .= "<li class='disabled'><a href='#'>&laquo;</a></li>";
+					}else{
+						$table .= "<li><a href='#' onclick='loadDataWS(".($halaman_ini - 1).")'>&laquo;</a></li>";
+					}
+
+					//Active set
+					$page_active = array();
+					for ($i=1; $i <= $countPage ; $i++) { 
+						$page_active[$i] = $i;
+						if ($page_active[$i] == $halaman_ini) {
+							$page_active[$i] = "class='active'";
+						}else{
+							$page_active[$i] = "";
+						}
+					}
+					//Pagination
+					$selisih_page = $countPage - $halaman_ini;
+					if ($halaman_ini == 1) {
+						$start = $halaman_ini;
+						if ($selisih_page < 2) {
+							$end = $halaman_ini + $selisih_page;
+						}else{
+							$end = $halaman_ini + 2;
+						}
+					}elseif ($halaman_ini == $countPage) {
+						if (($halaman_ini - 2) < 1) {
+							$start = $halaman_ini - 1;
+						}else{
+							$start = $halaman_ini - 2;
+						}
+						$end = $halaman_ini;
+					}else{
+						$start = $halaman_ini - 1;
+						$end = $halaman_ini + 1;
+					}
+
+					for($i = $start; $i <= $end ; $i++) { 
+						$table .= "
+						<li ".$page_active[$i]."><a href='#' onclick='loadDataWS(".$i.")'>".$i."</a></li>";
+					}
+
+					if (($countPage - $halaman_ini) < 1) {
+						$table .= "<li class='disabled'><a href='#'>&raquo;</a></li>";
+					}else{
+						$table .= "<li><a href='#' onclick='loadDataWS(".($halaman_ini + 1).")'>&raquo;</a></li>";
+					}
+					$table .= "</ul>";
+					$table .= "</div>";
+
+					$table .= "<table class='table table-bordered table-hover'>";
 					$table .= "
 	              	<thead>
 		                <tr>
@@ -158,7 +247,7 @@
 		                </tr>
 	              	</thead>
 	              	<tbody>";
-					$no = 1;
+					$no = $posisi + 1;
 					foreach ($data as $ws) {
 					$table .= "
 						<tr>
@@ -180,6 +269,10 @@
 					$table .= "
 					</tbody>
 					</table>";
+					$table .= "
+					<p class='hidden' id='halini'>".$halaman_ini."</p>
+					<p class='hidden' id='sumhalini'>".$countNow."</p>
+					";
 				}
 
 				$this->data = $table;
