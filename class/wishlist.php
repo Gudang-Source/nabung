@@ -85,6 +85,13 @@
 					$idBrg = $_POST['idBrg'];
 				}
 				$this->delData($this->userdata['userid'], $idBrg);
+			}elseif($act == "convData"){
+				if (empty($_GET['idBarang'])) {
+					$idBarang = null;
+				}else{
+					$idBarang = $_GET['idBarang'];
+				}
+				$this->convertWishlist($this->userdata['userid'], $idBarang);
 			}elseif($act == "fetchData"){
 				if (empty($_GET['idBrg'])) {
 					$idBarang = null;
@@ -221,9 +228,9 @@
 				return $status;
 			}
 
-			function btnState($persen){
+			function btnState($persen, $id){
 				if ($persen == 100) {
-					$state = "";
+					$state = "onclick='convertWishlist(".$id.")'";
 				}else{
 					$state = "disabled";
 				}
@@ -358,7 +365,7 @@
 							</td>
 							<td>".$ws['nominal_barang']."</td>
 							<td>
-								<button class='btn btn-sm btn-primary ".btnState(persentase($ws['nominal_barang'], $this->userdata['saldo']))."'>Beli</button>
+								<button class='btn btn-sm btn-primary' ".btnState(persentase($ws['nominal_barang'], $this->userdata['saldo']), $ws['id_barang']).">Beli</button>
 	                    		<button class='btn btn-sm btn-success' onclick='fetchData(".$ws['id_barang'].")'>Ubah</button>
 								<button class='btn btn-sm btn-danger' onclick='delDataWS(".$ws['id_barang'].")'>Hapus</button>
 							</td>
@@ -377,6 +384,41 @@
 			} catch (PDOException $e) {
 				$this->response['message'] = "Terjadi kesalahan : ".$e->getMessage();
 				$this->response['status'] = 0;
+			}
+		}
+
+		private function convertWishlist($id, $idBarang){
+			if (empty($idBarang)) {
+				$this->response['message'] = "Tidak ditemukan";
+				$this->response['status'] = 0;
+			}else{
+				try {
+					$squery = $this->conn->prepare("SELECT * FROM wishlist WHERE id_barang = :id_barang AND user_id = :user_id");
+					$squery->bindParam(':id_barang', $idBarang);
+					$squery->bindParam(':user_id', $id);
+					$squery->execute();
+
+					$data = $squery->fetch(PDO::FETCH_ASSOC);
+					$nama_barang = "Membeli ".$data['nama_barang'];
+
+					$query = $this->conn->prepare("INSERT INTO outcome(outcome_for, outcome_date, outcome_value, user_id) VALUES(:outcome_for, :outcome_date, :outcome_value, :user_id)");
+					$query->bindParam(':outcome_for', $nama_barang);
+					$query->bindParam(':outcome_date', date('Y-m-d'));
+					$query->bindParam(':outcome_value', $data['nominal_barang']);
+					$query->bindParam(':user_id', $id);
+					$query->execute();
+
+					$dquery = $this->conn->prepare("DELETE FROM wishlist WHERE id_barang = :id_barang AND user_id = :user_id");
+					$dquery->bindParam(':id_barang', $idBarang);
+					$dquery->bindParam(':user_id', $id);
+					$dquery->execute();
+
+					$this->response['message'] = "Berhasil tersimpan!";
+					$this->response['status'] = 1;
+				}catch(PDOException $e) {
+					$this->response['message'] = "Terjadi kesalahan ".$e->getMessage();
+					$this->response['status'] = 0;
+				}
 			}
 		}
 

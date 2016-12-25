@@ -105,6 +105,25 @@ function loadDataWS(page){
 	});
 }
 
+function convertWishlist(id){
+	var halini = $("#halini").text();
+	var conf = confirm("Apakah anda yakin sudah membelinya?");
+		if (conf == true) {
+		$.get("page/wsresponse.php",{
+			act: "convData",
+			idBarang: id
+		}, function(data){
+			var response = JSON.parse(data);
+			if (response.status == 1) {
+				alert(response.message);
+				loadDataWS(halini);
+			}else{
+				alert(response.message);
+			}
+		});
+	}
+}
+
 $(document).ready(function() {
 	loadDataWS(1);
 });
