@@ -11,6 +11,8 @@ function insertDataWS(){
 		if (response.status == 1) {
 			alert(response.message);
 			loadDataWS(halini);
+			$("#namabarang").val("");
+			$("#nominalbarang").val("");
 			$("#add-barang").modal('hide');
 		}else{
 			alert(response.message);
