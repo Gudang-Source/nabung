@@ -86,6 +86,27 @@
 			}
 		}
 
+		private function addData($id, $namaBarang, $nominalBarang){
+			if (empty($namaBarang) || empty($nominalBarang)) {
+				$this->response['message'] = "Data tidak boleh kosong";
+				$this->response['status'] = 0;
+			}else{
+				try{
+					$query = $this->conn->prepare("INSERT INTO wishlist(nama_barang, nominal_barang, user_id) VALUES(:nama_barang, :nominal_barang, :user_id)");
+					$query->bindParam(':nama_barang', $namaBarang);
+					$query->bindParam(':nominal_barang', $nominalBarang);
+					$query->bindParam(':user_id', $id);
+					$query->execute();
+
+					$this->response['message'] = "Data berhasil disimpan!";
+					$this->response['status'] = 1;
+				}catch(PDOException $e){
+					$this->response['message'] = "Terjadi kesalahan : ".$e->getMessage();
+					$this->response['status'] = 0;
+				}
+			}
+		}
+
 		private function getData($id, $searchText, $halaman){
 			//Fungsi persentasi
 			function persentase($harga, $saldo){

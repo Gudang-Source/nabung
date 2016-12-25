@@ -54,12 +54,12 @@
             </div>
             <div class="form-group">
               <label for="namabarang">Nominal Harga</label>
-              <input id="namabarang" type="text" class="form-control" placeholder="Harga Barang">
+              <input id="nominalbarang" type="text" class="form-control" placeholder="Harga Barang">
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Tambahkan</button>
+            <button type="button" class="btn btn-primary" onclick="insertDataWS()">Tambahkan</button>
           </div>
         </div>
       </div>
