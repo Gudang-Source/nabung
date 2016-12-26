@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2016 at 09:44 PM
+-- Generation Time: Dec 26, 2016 at 10:28 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -39,12 +39,7 @@ CREATE TABLE `income` (
 --
 
 INSERT INTO `income` (`income_id`, `user_id`, `income_from`, `income_date`, `income_value`) VALUES
-(155, 9, 'Uang jajan', '2016-12-11', 40000),
-(162, 12, 'Uang Jajan', '2016-12-25', 10000),
-(163, 12, 'Uang Jajan', '2016-12-25', 10000),
-(164, 12, 'Uang Jajan', '2016-12-25', 5000),
-(165, 12, 'Uang Jajan', '2016-12-25', 200000),
-(166, 12, 'Uang Jajan', '2016-12-25', 25000);
+(155, 9, 'Uang jajan', '2016-12-11', 40000);
 
 -- --------------------------------------------------------
 
@@ -59,15 +54,6 @@ CREATE TABLE `outcome` (
   `outcome_date` date NOT NULL,
   `outcome_value` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `outcome`
---
-
-INSERT INTO `outcome` (`outcome_id`, `user_id`, `outcome_for`, `outcome_date`, `outcome_value`) VALUES
-(51, 9, 'Hutang', '2016-12-11', 20000),
-(56, 0, 'RAM', '2016-12-25', 250000),
-(57, 0, 'RAM', '2016-12-25', 250000);
 
 -- --------------------------------------------------------
 
@@ -106,6 +92,13 @@ CREATE TABLE `wishlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`id_barang`, `user_id`, `nama_barang`, `nominal_barang`) VALUES
+(4, 12, 'RAM 2GB', 250000);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -141,12 +134,12 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `income`
 --
 ALTER TABLE `income`
-  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 --
 -- AUTO_INCREMENT for table `outcome`
 --
 ALTER TABLE `outcome`
-  MODIFY `outcome_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `outcome_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -156,7 +149,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
