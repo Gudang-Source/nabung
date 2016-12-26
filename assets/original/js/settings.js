@@ -98,6 +98,7 @@ $("#form-upimage").on('submit', function(e) {
 		if (response.status == 1) {
 			alert(response.message);
 			loadData();
+			refrPict();
 		}else{
 			alert(response.message);
 		}

@@ -29,6 +29,7 @@ $("#addIncome").click(function () {
     	  loadIncome(page);
     	}
       $("#modal-addinc").modal("hide");
+      initGlob();
     }else{
       alert(response.message);
     }
@@ -66,6 +67,7 @@ function updateIncomeData(){
 			alert(response.message);
 			$("#modal-editinc").modal("hide");
             loadIncome(page);
+            initGlob();
 		}else{
 			alert(response.message);
 		}
@@ -90,6 +92,7 @@ function delIncome(id){
         }else{
           loadIncome(page);
         }
+        initGlob();
 		}else{
 		  alert(response.message);
 		}

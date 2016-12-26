@@ -117,6 +117,7 @@ function convertWishlist(id){
 			if (response.status == 1) {
 				alert(response.message);
 				loadDataWS(halini);
+				initGlob();
 			}else{
 				alert(response.message);
 			}

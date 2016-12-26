@@ -3,11 +3,19 @@ $database = new Koneksi();
 $koneksi = $database->dapetKoneksi();
 
 $login = new Login($koneksi);
-
+$user = new User($koneksi, $login->sessionCheck(), $_SESSION['id']);
 $halamannya = new Page($_GET['p'],$login->sessionCheck(),$koneksi);
 $activePage = $halamannya->setActive();
 ?>
     <aside class="main-sidebar">
+        <div class="user-profile">
+            <img src="upload/user-default.png" class="img-responsive img-circle" id="profile-pict">
+            <div class="profile-status">
+                <h5 id="profile-name"><?php echo $user->name ?></h5>
+                <h6 id="profile-balance"></h6>
+            </div>
+        </div>
+        <hr/>
       <ul class="nav nav-pills nav-stacked">
         <li<?php echo $activePage['dashboard'] ;?>><a href="?p=dashboard"><i class="fa fa-fw fa-dashboard"></i>&nbsp; Dashboard</a></li>
         <li<?php echo $activePage['income'] ;?>><a href="?p=income"><i class="fa fa-fw fa-arrow-circle-o-down"></i>&nbsp; Income</a></li>

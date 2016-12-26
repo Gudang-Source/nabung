@@ -1,12 +1,12 @@
 <?php
 class User{
 	private $user_id;
-	private $username;
-	private $name;
+	public $username;
+	public $name;
 	private $goal;
 	private $profilePict;
 
-	private $userdata;
+	public $userdata;
 
 	private $message;
 	private $status;

@@ -29,6 +29,7 @@ $("#addOutcome").click(function(){
 				loadOutcome(page);
 			}
 			$("#modal-addout").modal("hide");
+			initGlob();
 		}else{
 			alert(response.message);
 		}
@@ -53,6 +54,7 @@ function delOutcome(id){
 				}else{
 					loadOutcome(page);
 				}
+				initGlob();
 			}else{
 				alert(response.message);
 			}
@@ -90,6 +92,7 @@ function updateOutcomeData(){
 			alert(response.message);
 			$("#modal-editout").modal("hide");
 			loadOutcome(page);
+			initGlob();
 		}else{
 			alert(response.message);
 		}

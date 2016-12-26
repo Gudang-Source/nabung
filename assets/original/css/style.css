@@ -104,9 +104,10 @@ input{
 .main-sidebar{
   position: absolute;;
   width:250px;
-  padding-top: 100px;
-  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
   min-height: 100%;
+  padding-right: 5px;
 }
 
 /* main content */
@@ -207,4 +208,29 @@ table{
 .sub-value{
   font-size: 16px;
   margin-bottom: 5px;
+}
+
+/* User Proflie
+*/
+.user-profile{
+    padding-top:30px;
+    padding-left:35px;
+    padding-right:35px;
+
+}
+.user-profile > img{
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+}
+.user-profile > .profile-status{
+    margin-top: 15px;
+    text-align: center;
+}
+.profile-status > h5{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.profile-status > h6{
+  margin-top: 5px;
 }

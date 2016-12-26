@@ -2,6 +2,7 @@
 require_once 'class/koneksi.php';
 require_once 'class/login.php';
 require_once 'class/page.php';
+require_once 'class/user.php';
 
 // Initiasi objek
 $database = new Koneksi();
@@ -56,6 +57,7 @@ $halamannya->setPage();
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.selecter.min.js"></script>
     <script type="text/javascript" src="assets/bootflat/js/jquery.fs.stepper.min.js"></script>
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/original/js/global.js"></script>
     <?php echo $halamannya->setLibrary();?>
   </body>
 </html>
