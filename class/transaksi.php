@@ -6,7 +6,7 @@ class Transaksi{
    private $updateData;
 
    private $auth;
-  
+
    private $message;
    private $eksekusi;
    private $action;
@@ -98,7 +98,7 @@ class Transaksi{
   		$this->tableData = "<p class='text-center'>Anda belum memilih tanggal !</p>";
   	}else{
   		try {
-  		  //Untuk menghitung range bulan 
+  		  //Untuk menghitung range bulan
         $getDate = explode('-',$_GET['income_date']);
         $tahun = $getDate['0'];
         $bulan = $getDate['1'];
@@ -153,7 +153,7 @@ class Transaksi{
 
         $query->execute();
         $queryJumlahData->execute();
-        
+
         //Hitung jumlah data pada page itu
         $jumlahDataShow = $query->rowCount();
 
@@ -192,7 +192,7 @@ class Transaksi{
 
         //Pagination active class
         $activePagin = array();
-        for ($i=1; $i <= $jumlahPage; $i++) { 
+        for ($i=1; $i <= $jumlahPage; $i++) {
           $activePagin[$i] = $i;
           if ($halamanIni == $activePagin[$i]) {
             $activePagin[$i] = "class='active'";
@@ -206,7 +206,7 @@ class Transaksi{
         $selisihPos = $jumlahPage - $halamanIni;
 
         //Pejwan
-        if ($position == 1) {       
+        if ($position == 1) {
           $startFrom = $position;
           if($selisihPos < 2){
             $endTo = $position + $selisihPos;
@@ -215,7 +215,7 @@ class Transaksi{
           }
         }
         //Pejlas
-        elseif ($position == $jumlahPage) {     
+        elseif ($position == $jumlahPage) {
           if(($position - 2) < 1){
             $startFrom = $position - 1;
           }else{
@@ -224,8 +224,8 @@ class Transaksi{
           $endTo = $position;
         }
         //Tengah - tengah
-        else{ 
-          $startFrom = $position - 1; 
+        else{
+          $startFrom = $position - 1;
           $endTo = $position + 1;
         }
 
@@ -346,7 +346,7 @@ private function updateIncomeData(){
    }catch(PDOException $e){
      $this->message = "Data gagal diupdate : ".$e->getMessage();
      $this->eksekusi = 0;
-   }		
+   }
  }
 }
 
@@ -472,7 +472,7 @@ private function bacaOutcome(){
 
           //Page yang aktif
         $activePagin = array();
-        for ($i = 1; $i <= $pageCount; $i++) { 
+        for ($i = 1; $i <= $pageCount; $i++) {
           $activePagin[$i] = $i;
           if ($position == $activePagin[$i]) {
             $activePagin[$i] = "class = 'active'";
@@ -504,7 +504,7 @@ private function bacaOutcome(){
           $endTo = $position + 1;
         }
 
-        for ($i = $startFrom; $i <= $endTo ; $i++) { 
+        for ($i = $startFrom; $i <= $endTo ; $i++) {
           $tableData .= "<li ".$activePagin[$i]."><a href='#' onclick='loadOutcome(".$i.")'>".$i."</a></li>";
         }
 
@@ -584,7 +584,7 @@ private function getOutcomeData(){
     $query->bindParam(':user_id', $_SESSION['id']);
     $query->bindParam(':outcome_id', $_POST['outcome_id']);
     $query->execute();
-    
+
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
       $outcomeData = $row;
     }

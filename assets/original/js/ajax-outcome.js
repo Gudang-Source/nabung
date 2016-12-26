@@ -1,3 +1,15 @@
+// TODO: Langsung menampilkan tanggal sekarang (auto show)
+function init(){
+	var today = new Date();
+	var bulan = today.getMonth() + 1;
+	var tahun = today.getFullYear();
+
+	var date = tahun+"-"+bulan;
+
+	$("#outShowDate").val(date);
+	loadOutcome(1);
+}
+
 $("#addOutcome").click(function(){
 	var outcome_for = $("#outUntuk").val();
 	var outcome_value = $("#outValue").val();
@@ -116,3 +128,7 @@ function loadOutcome(page){
 		}
 	}
 }
+
+$(document).ready(function() {
+	init();
+});

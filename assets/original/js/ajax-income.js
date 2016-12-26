@@ -1,3 +1,15 @@
+// TODO: Langsung menampilkan tanggal sekarang (auto show)
+function init(){
+  var today = new Date();
+  var bulan = today.getMonth() + 1;
+  var tahun = today.getFullYear();
+
+  var date = tahun+"-"+bulan;
+
+  $("#incShowDate").val(date);
+  loadIncome(1);
+}
+
 $("#addIncome").click(function () {
   var income_from = $("#incDari").val();
   var income_value = $("#incValue").val();
@@ -42,7 +54,7 @@ function updateIncomeData(){
 	var income_from = $("#editFromInc").val();
 	var income_value = $("#editValueInc").val();
     var page = $("#disPage").text();
-	
+
   $.post("page/response.php",{
 	upIncID: income_id,
 	upIncFrom: income_from,
@@ -64,7 +76,7 @@ function delIncome(id){
   var bool = confirm("Anda yakin ingin menghapus ini?");
   var page = $("#disPage").text();
   var pageData = $("#disCount").text();
-  
+
   if(bool == true){
 	  $.post("page/response.php",{
 		delInc: 1,
@@ -88,7 +100,7 @@ function delIncome(id){
 function loadIncome(pagination) {
   var date2show = $("#incShowDate").val();
   var text2find = $("#findText").val();
-  
+
   if(date2show == ""){
 	$("#findText").attr("disabled",1);
 	$("#alertNotShow").fadeIn(300, function(){
@@ -117,3 +129,7 @@ function loadIncome(pagination) {
       }
   }
 }
+
+$(document).ready(function() {
+  init();
+});
