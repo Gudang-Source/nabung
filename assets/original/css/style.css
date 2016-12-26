@@ -11,6 +11,13 @@ html,body{
   text-align: center;
 }
 
+input{
+  box-shadow: none !important;
+}
+.btn{
+  outline: 0 !important;
+}
+
 /* Login Form */
 .login-form{
   margin: 100px auto;
@@ -188,4 +195,16 @@ table{
   border: 1px solid #E6E9ED;
   border-radius: 5px;
   padding: 20px;
+}
+
+.sub-title{
+  float: left;
+  font-weight: 600;
+  font-size: 16px;
+  padding-right: 5px;
+}
+
+.sub-value{
+  font-size: 16px;
+  margin-bottom: 5px;
 }
