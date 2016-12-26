@@ -116,6 +116,8 @@
         $library = "<script type='text/javascript' src='assets/original/js/ajax-wishlist.js'></script>";
       }elseif ($this->page == "settings") {
         $library = "<script type='text/javascript' src='assets/original/js/settings.js'></script>";
+      }elseif ($this->page == "dashboard") {
+        $library = "<script type='text/javascript' src='assets/original/js/ajax-dashboard.js'></script>";
       }else{
         $library = "<!-- No Library Loaded -->";
       }

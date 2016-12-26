@@ -14,7 +14,7 @@ class User{
 
 	public function __construct($koneksi, $sesi, $userID){
 		$this->conn = $koneksi;
-		if ($sesi != TRUE) {
+		if ($sesi == FALSE) {
 			$this->message = "Access denied!";
 		}else{
 			if (isset($userID)) {
@@ -26,7 +26,7 @@ class User{
 
 					$user_data = $query->fetch(PDO::FETCH_ASSOC);
 
-					$this->user_id = $userID;
+					$this->user_id = $user_data['user_id'];
 					$this->username = $user_data['username'];
 					$this->name = $user_data['fullname'];
 					$this->goal = $user_data['goal'];
@@ -40,61 +40,70 @@ class User{
 	}
 
 	public function Request($act){
-		if (empty($act)) {
-			$this->message = "Menunggu perintah";
-		}elseif ($act == "changeName") {
-			if (empty($_POST['name'])) {
-				$changedName = null;
-			}else{
-				$changedName = $_POST['name'];
-			}
-			$user_id = $this->user_id;
-			$this->changeName($user_id, $changedName);
-		}elseif ($act == "getUserData") {
-			$this->getUserData();
-		}elseif ($act == "changePassword") {
-			if (empty($_POST['oldPassword'])) {
-				$oldPassword = null;
-			}else{
-				$oldPassword = $_POST['oldPassword'];
-			}
+		if (empty($this->user_id)) {
+			$this->message = "Access denied";
+		}else{
+			if (empty($act)) {
+				$this->message = "Menunggu perintah";
+			}elseif ($act == "changeName") {
+				if (empty($_POST['name'])) {
+					$changedName = null;
+				}else{
+					$changedName = $_POST['name'];
+				}
+				$user_id = $this->user_id;
+				$this->changeName($user_id, $changedName);
+			}elseif ($act == "getUserData") {
+				$this->getUserData();
+			}elseif ($act == "changePassword") {
+				if (empty($_POST['oldPassword'])) {
+					$oldPassword = null;
+				}else{
+					$oldPassword = $_POST['oldPassword'];
+				}
 
-			if (empty($_POST['newPassword'])) {
-				$newPassword = null;
-			}else{
-				$newPassword = $_POST['newPassword'];
-			}
+				if (empty($_POST['newPassword'])) {
+					$newPassword = null;
+				}else{
+					$newPassword = $_POST['newPassword'];
+				}
 
-			if (empty($_POST['retryPassword'])) {
-				$retryPassword = null;
-			}else{
-				$retryPassword = $_POST['retryPassword'];
-			}
-			$user_id = $this->user_id;
+				if (empty($_POST['retryPassword'])) {
+					$retryPassword = null;
+				}else{
+					$retryPassword = $_POST['retryPassword'];
+				}
+				$user_id = $this->user_id;
 
-			$this->changePassword($user_id, $oldPassword, $newPassword, $retryPassword);
-		}elseif ($act == "changeGoal"){
-			if (empty($_POST['goal'])) {
-				$goal = null;
-			}else{
-				$goal = $_POST['goal'];
-			}
-			$user_id = $this->user_id;
+				$this->changePassword($user_id, $oldPassword, $newPassword, $retryPassword);
+			}elseif ($act == "changeGoal"){
+				if (empty($_POST['goal'])) {
+					$goal = null;
+				}else{
+					$goal = $_POST['goal'];
+				}
+				$user_id = $this->user_id;
 
-			$this->changeGoal($user_id, $goal);
-		}elseif ($act == "changePict") {
-			if (empty($_FILES['picture']['name'])) {
-				$picture = null;
-				$picture_tmp = null;
-				$picture_size = null;
-			}else{
-				$picture = $_FILES['picture']['name'];
-				$picture_tmp = $_FILES['picture']['tmp_name'];
-				$picture_size = $_FILES['picture']['size'];
-			}
-			$user_id = $this->user_id;
+				$this->changeGoal($user_id, $goal);
+			}elseif ($act == "changePict") {
+				if (empty($_FILES['picture']['name'])) {
+					$picture = null;
+					$picture_tmp = null;
+					$picture_size = null;
+				}else{
+					$picture = $_FILES['picture']['name'];
+					$picture_tmp = $_FILES['picture']['tmp_name'];
+					$picture_size = $_FILES['picture']['size'];
+				}
+				$user_id = $this->user_id;
 
-			$this->changePicture($user_id, $picture, $picture_tmp, $picture_size);
+				$this->changePicture($user_id, $picture, $picture_tmp, $picture_size);
+			}elseif ($act == "fetchData") {
+				$this->fetchUserData($this->user_id);
+			}else{
+				$this->message = "Perintah tidak dikenal";
+				$this->status = 0;
+			}
 		}
 	}
 
@@ -218,6 +227,66 @@ class User{
 		}
 	}
 
+	private function fetchUserData($id){
+		if (empty($id)) {
+			$this->message = "Tidak ditemukan";
+			$this->status = 0;
+		}else{
+			try {
+				//Saldo
+				$sum_income = $this->conn->prepare("SELECT SUM(income_value) AS jumlah FROM income WHERE user_id = :user_id");
+				$sum_income->bindParam(':user_id', $id);
+				$sum_income->execute();
+				$result_inc = $sum_income->fetch(PDO::FETCH_ASSOC);
+
+				$sum_outcome = $this->conn->prepare("SELECT SUM(outcome_value) AS jumlah FROM outcome WHERE user_id = :user_id");
+				$sum_outcome->bindParam(':user_id', $id);
+				$sum_outcome->execute();
+				$result_out = $sum_outcome->fetch(PDO::FETCH_ASSOC);
+
+				//Now
+				$date = date('Y-m');
+				$now = "{$date}%";
+
+				//Income Bulan Ini
+				$income_now = $this->conn->prepare("SELECT SUM(income_value) AS jumlah FROM income WHERE user_id = :user_id AND income_date LIKE :dates");
+				$income_now->bindParam(':user_id', $id);
+				$income_now->bindParam(':dates', $now);
+				$income_now->execute();
+				$result_income_now = $income_now->fetch(PDO::FETCH_ASSOC);
+
+				//Outcome Bulan Ini
+				$outcome_now = $this->conn->prepare("SELECT SUM(outcome_value) AS jumlah FROM outcome WHERE user_id = :user_id AND outcome_date LIKE :dates");
+				$outcome_now->bindParam(':user_id', $id);
+				$outcome_now->bindParam(':dates', $now);
+				$outcome_now->execute();
+				$result_outcome_now = $outcome_now->fetch(PDO::FETCH_ASSOC);
+
+				$saldo = $result_inc['jumlah'] - $result_out['jumlah'];
+
+				$data = array();
+				$data['saldo'] = $saldo;
+				$data['income'] = $result_income_now['jumlah'];
+				$data['outcome'] = $result_outcome_now['jumlah'];
+
+				if ($data['saldo'] == null) {
+					$data['saldo'] = 0;
+				}
+				if ($data['income'] == null) {
+					$data['income'] = 0;
+				}
+				if ($data['outcome'] == null) {
+					$data['outcome'] = 0;
+				}
+
+				$this->userdata = $data;
+			}catch(PDOException $e) {
+				$this->message = "Terjadi Kesalahan : ".$e->getMessage();
+				$this->status = 0;
+			}
+		}
+	}
+
 	public function Response(){
 		$response = array();
 		if ($this->message != "") {
@@ -226,7 +295,7 @@ class User{
 		}else{
 			$response = $this->userdata;
 		}
-		
+
 		return json_encode($response);
 	}
 }

@@ -8,5 +8,10 @@
           </div>
         </div>
       </section>
-
+<!--
+TODO: Dasboard information
+-->
+<p id="saldo"></p>
+<p id="incNow"></p>
+<p id="outNow"></p>
     </main>
